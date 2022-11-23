@@ -4,10 +4,8 @@ class CreateUsers < ActiveRecord::Migration[6.1]
       t.string :username
       t.string :password_digest
       t.string :email
-      t.string :profile_image
-      t.string :city
-      t.string :state
-      t.string :country
+      t.integer :interval
+      t.string :preferences
 
       t.timestamps
     end

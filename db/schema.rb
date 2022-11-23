@@ -10,70 +10,24 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_08_15_191718) do
+ActiveRecord::Schema.define(version: 2022_11_23_051952) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
-  create_table "actions", force: :cascade do |t|
-    t.integer "track_id"
-    t.datetime "date_time"
-    t.float "number"
-    t.integer "difficulty"
-    t.string "comment"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-  end
-
-  create_table "goals", force: :cascade do |t|
+  create_table "lists", force: :cascade do |t|
     t.integer "user_id"
-    t.string "title"
-    t.string "description"
-    t.string "why"
+    t.string "list_name"
+    t.string "order"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
 
-  create_table "groups", force: :cascade do |t|
-    t.string "group_name"
-    t.string "description"
-    t.integer "owner_id"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-  end
-
-  create_table "memberships", force: :cascade do |t|
-    t.integer "user_id"
-    t.integer "group_id"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-  end
-
-  create_table "messages", force: :cascade do |t|
-    t.integer "user_id"
-    t.integer "group_id"
-    t.string "text"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-  end
-
-  create_table "relationships", force: :cascade do |t|
-    t.integer "user_id"
-    t.integer "friend_id"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-  end
-
-  create_table "tracks", force: :cascade do |t|
-    t.integer "user_id"
-    t.string "title"
-    t.string "activity"
-    t.string "minmax"
-    t.float "number"
-    t.string "unit"
-    t.string "interval"
-    t.string "notes"
-    t.integer "group_id"
+  create_table "tasks", force: :cascade do |t|
+    t.integer "list_id"
+    t.string "name"
+    t.integer "length"
+    t.string "status"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
@@ -82,10 +36,8 @@ ActiveRecord::Schema.define(version: 2022_08_15_191718) do
     t.string "username"
     t.string "password_digest"
     t.string "email"
-    t.string "profile_image"
-    t.string "city"
-    t.string "state"
-    t.string "country"
+    t.integer "interval"
+    t.string "preferences"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
