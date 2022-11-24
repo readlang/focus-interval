@@ -11,7 +11,7 @@ class UsersController < ApplicationController
     # get "/me" - login using previously saved session cookie
     def show_me
         if current_user   # current_user found in application_controller helper method
-            render json: current_user
+            render json: current_user, status: :ok
         else
             render json: {errors: ["Not logged in"]}, status: :unauthorized
         end
@@ -21,11 +21,6 @@ class UsersController < ApplicationController
     # get "/users"
     def index
         render json: User.all, status: :ok
-    end
-
-    # get "/users/current"
-    def show
-        render json: current_user, status: :ok
     end
 
     # put "/users/current"

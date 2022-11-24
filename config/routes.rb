@@ -15,7 +15,6 @@ Rails.application.routes.draw do
 
   # other users actions
   get "/users", to: "users#index"   # DELETE this later??
-  get "/users/current", to: "users#show"
   put "/users/current", to: "users#update"
   # delete "/users/:id", to: "users#destroy"  -  maybe we don't want to delete users
 
