@@ -35,7 +35,8 @@ class UsersController < ApplicationController
         render json: user, status: :ok
     end
 
-    # delete "/users/:id"  -  maybe this shouldn't be allowed...
+    # maybe this shouldn't be allowed...
+    # delete "/users/:id"
     # def destroy
     #     user = current_user
     #     user.destroy

@@ -30,8 +30,9 @@ class TasksController < ApplicationController
         render json: {deleted: task}, status: :ok
     end
 
+    # get /users/current/tasks
     def show_for_user
-        
+        render json: current_user.tasks, status: :ok
     end
 
     private

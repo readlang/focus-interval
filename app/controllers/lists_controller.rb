@@ -30,8 +30,9 @@ class ListsController < ApplicationController
         render json: {deleted: list}, status: :ok
     end
 
+    # get /users/current/lists
     def show_for_user
-        
+        render json: current_user.lists, status: :ok
     end
 
     private
@@ -43,6 +44,5 @@ class ListsController < ApplicationController
     def edit_params
         params.permit( :list_name, :order )
     end
-
 
 end
