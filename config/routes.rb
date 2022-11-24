@@ -2,8 +2,23 @@ Rails.application.routes.draw do
 
   resources :tasks
   resources :lists
-  resources :users
-  
+
+  # custom routes
+  get "/users/current/lists", to: "lists#show_for_user" # show the lists for the current user
+  get "/users/current/tasks", to: "tasks#show_for_user" # show the tasks for the current user
+
+  # log in / log out actions
+  post "/signup", to: "users#create" # new signup
+  get "/me", to: "users#show_me" # return visit check session cookie
+  post "/login", to: "sessions#create" # explicit login
+  delete "/logout", to: "sessions#destroy" # log out
+
+  # other users actions
+  get "/users", to: "users#index"   # DELETE this later??
+  get "/users/current", to: "users#show"
+  put "/users/current", to: "users#update"
+  # delete "/users/:id", to: "users#destroy"  -  maybe we don't want to delete users
+
   # Routing logic: fallback requests for React Router.
   # Leave this here to help deploy your app later!
   get "*path", to: "fallback#index", constraints: ->(req) { !req.xhr? && req.format.html? }
