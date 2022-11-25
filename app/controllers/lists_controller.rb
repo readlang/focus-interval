@@ -35,6 +35,11 @@ class ListsController < ApplicationController
         render json: current_user.lists, status: :ok
     end
 
+    # get /users/current/listsandtasks
+    def show_for_user_with_tasks
+        render json: current_user.lists, each_serializer: ListtaskSerializer, status: :ok
+    end
+
     private
 
     def create_params

@@ -38,6 +38,11 @@ class UsersController < ApplicationController
     #     render json: {deleted: user}, status: :ok
     # end
 
+    # get "/users/current/loadall"
+    def loadall
+        render json: current_user, serializer: UserallSerializer, status: :ok
+    end
+
     private
 
     def user_params
