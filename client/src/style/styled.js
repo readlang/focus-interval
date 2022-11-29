@@ -1,6 +1,33 @@
 import styled from "styled-components";
 import Button from "react-bootstrap/Button";
 
+export const H1 = styled.h1`
+  color: black;
+  font-family: "SF Pro Text", "Myriad Set Pro", "SF Pro Icons", "Apple Legacy Chevron", "Helvetica Neue", "Helvetica", "Arial", sans-serif;
+  font-size: 40px;
+  font-weight: bold;
+  margin-top: 0px;
+  margin-bottom: 1px;
+`
+export const H2 = styled(H1)`
+  font-size: 32px;
+`
+export const H3 = styled(H1)`
+  font-size: 20px;
+`
+export const H4 = styled(H1)`
+  font-size: 20px;
+  font-weight: lighter;
+`
+export const H5 = styled(H1)`
+  font-size: 16px;
+  font-weight: lighter;
+`
+export const H6 = styled(H1)`
+  font-size: 12px;
+  font-weight: lighter;
+`
+
 // TrackPage, GroupPage
 export const CardButton = styled(Button)`
   width: 450px;

@@ -5,17 +5,9 @@ import {userSessionLogIn} from '../slices/userSlice'
 
 import Error from "./Error"
 import UserPage from "./UserPage"
-import NavBar from "./NavBar"
-
-import UserEdit from "./UserEdit"
-import Home from "./Home"
-
-// import GoalPage from "./GoalPage"
-// import FriendPage from "./FriendPage"
-// import TrackPage from "./TrackPage"
-// import ActionPage from "./ActionPage"
-// import GroupPage from "./GroupPage"
-// import GroupRoom from "./GroupRoom"
+import ListView from "./ListView"
+import TaskView from "./TaskView"
+import Settings from "./Settings"
 
 function App() {
   const user = useSelector((state)=>state.user.value)
@@ -28,21 +20,12 @@ function App() {
   if ( !user.id ) { return <> <UserPage/> <Error /> </>} 
   else { return (
     <>
-      <NavBar/>
       <Error />
       <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="user-edit" element={<UserEdit/>} />
-        {/* 
-        <Route path="goals" element={<GoalPage />} />
-        <Route path="friends" element={<FriendPage />} />
-        <Route path="tracks" element={<TrackPage />} />
-        <Route path="tracks/:trackId/actions"  element={<ActionPage />} />
-        <Route path="groups" element={<GroupPage/>} />
-        <Route path="groups/:groupId"  element={<GroupRoom />} /> 
-        */}
-
-        
+        <Route path="/" element={<ListView />} />
+        <Route path="lists" element={<ListView />} />
+        <Route path="tasks" element={<TaskView />} />
+        <Route path="settings" element={<Settings/>} />
       </Routes>
     </>
   )}
