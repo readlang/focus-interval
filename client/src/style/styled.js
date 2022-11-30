@@ -27,6 +27,10 @@ export const H6 = styled(H1)`
   font-size: 12px;
   font-weight: lighter;
 `
+export const H5B = styled(H1)`
+  font-size: 16px;
+  font-weight: normal;
+`
 
 // TrackPage, GroupPage
 export const CardButton = styled(Button)`
