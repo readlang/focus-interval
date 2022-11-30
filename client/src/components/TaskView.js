@@ -16,7 +16,7 @@ const Header = styled.div`
 const Content = styled.div`
     flex: 1 1 auto;
     background-color: pink;
-    overflow-y: auto;
+    overflow-y: scroll;
 `
 
 const Footer = styled.div`
