@@ -17,8 +17,9 @@ function App() {
     dispatch(userSessionLogIn())
   }, [dispatch])
 
-  if ( !user.id ) { return <> <UserPage/> <Error /> </>} 
-  else { return (
+  // if ( !user.id ) { return <> <UserPage/> <Error /> </>}    ///uncomment this later!!
+  // else { 
+    return (
     <>
       <Error />
       <Routes>
@@ -28,7 +29,8 @@ function App() {
         <Route path="settings" element={<Settings/>} />
       </Routes>
     </>
-  )}
+  )
+  // }
 }
 
 export default App;

@@ -1,9 +1,66 @@
 import styled from "styled-components";
 import Button from "react-bootstrap/Button";
 
+export const Canvas = styled.div`
+  height: 100vh;
+  display: flex;
+  flex-flow: column;
+`
+export const Header = styled.div`
+  flex: 0 0 70px;
+  margin: 0 10px;
+  border-bottom: 2px solid black;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+`
+export const ScrollableList = styled.div`
+  flex: 1 1 auto;
+  margin: 0 0 0 10px;
+  overflow-y: scroll;
+`
+export const ListItem = styled.div`
+  border-bottom: 1px solid lightgray;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+`
+export const Footer = styled.div`
+  flex: 0 0 70px;
+  padding: 0 10px;
+  background-color: hsl(100, 0%, 90%);
+  border-top: 1px solid gray;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+`
+export const IconButton = styled.button`
+  border: 0px;
+  background-color: rgba(0, 0, 0, 0);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  display: inline-flex;
+`
+export const OutlineButton = styled(IconButton)`
+  border: 1px solid black;
+  border-radius: 5px;
+`
+export const RowButton = styled.button`
+  width: 100%;
+  min-height: 49px;
+  padding: 6px;
+  border: 0px;
+  background-color: rgba(0, 0, 0, 0);
+  text-align: left;
+`
+export const blueUI = "hsl(211, 100%, 50%)"
+
 export const H1 = styled.h1`
   color: black;
-  font-family: "SF Pro Text", "Myriad Set Pro", "SF Pro Icons", "Apple Legacy Chevron", "Helvetica Neue", "Helvetica", "Arial", sans-serif;
+  font-family: "SF Pro Text", "Myriad Set Pro", 
+    "SF Pro Icons", "Apple Legacy Chevron", 
+    "Helvetica Neue", "Helvetica", "Arial", sans-serif;
   font-size: 40px;
   font-weight: bold;
   margin-top: 0px;
@@ -30,7 +87,14 @@ export const H6 = styled(H1)`
 export const H5B = styled(H1)`
   font-size: 16px;
   font-weight: normal;
+  margin: 1px 0 0 0;
 `
+
+
+
+
+
+// -- Delete the stuff below? -- //
 
 // TrackPage, GroupPage
 export const CardButton = styled(Button)`
