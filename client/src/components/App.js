@@ -2,6 +2,8 @@ import {Routes, Route} from "react-router-dom"
 import {useEffect} from "react"
 import {useDispatch, useSelector} from "react-redux"
 import {userSessionLogIn} from '../slices/userSlice'
+import { getTasks } from "../slices/tasksSlice"
+import { getLists } from "../slices/listsSlice"
 
 import Error from "./Error"
 import UserPage from "./UserPage"
@@ -15,6 +17,8 @@ function App() {
   
   useEffect(() => {
     dispatch(userSessionLogIn())
+    dispatch(getTasks())
+    dispatch(getLists())
   }, [dispatch])
 
   // if ( !user.id ) { return <> <UserPage/> <Error /> </>}    ///uncomment this later!!
