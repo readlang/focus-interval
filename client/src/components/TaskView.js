@@ -4,6 +4,7 @@ import { useSelector, useDispatch } from "react-redux";
 import styled from "styled-components";
 import { H1, H2, H3, H4, H5, H6, H5B, blueUI } from "../style/styled.js";
 import { Canvas, Header, ScrollableList, ListItem, Footer, IconButton, OutlineButton, RowButton } from "../style/styled.js";
+import Modal from "./Modal.js";
 
 const AttentionArea = styled.div`
     margin: 4px 10px 0;
@@ -25,7 +26,11 @@ function TaskView() {
     console.log(list)
     const tasks = useSelector(state => state.tasks.userTasks).filter(task => (task.list_id === listId))  // find only the tasks related to this list
     console.log(tasks)
+    const [showModal, setShowModal] = useState(false)
 
+    if (!list) {
+        return(<div>Loading User and List information...</div>)
+    } else
     return(
         <Canvas>
             <Header>
@@ -67,9 +72,11 @@ function TaskView() {
                     </ListItem> 
                 )}    
             </ScrollableList>
+            {showModal ? <Modal setShowModal={setShowModal}/> : null }
+             
 
             <Footer> 
-                <IconButton onClick={()=>console.log("Create new task.")}> 
+                <IconButton onClick={()=>setShowModal(true)}> 
                     <i className="bi bi-plus-circle-fill" style={{fontSize: 25, color: `${blueUI}` }} />  
                     <H5B style={{color: `${blueUI}`}}> &nbsp; New Task &emsp; &emsp;</H5B> 
                 </IconButton>

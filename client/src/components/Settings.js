@@ -4,38 +4,7 @@ import { useSelector, useDispatch } from "react-redux";
 import styled from "styled-components";
 import { H1, H2, H3, H4, H5, H6, H5B, blueUI } from "../style/styled.js";
 import { Canvas, Header, ScrollableList, ListItem, Footer, IconButton, OutlineButton, RowButton } from "../style/styled.js";
-
-const BubbleGroup = styled.div`
-    margin: 25px 10px;
-    padding: 0 20px;
-    background-color: hsl(0, 0%, 95%);
-    border-radius: 10px;
-`
-const BubbleItem = styled.div`
-    height: 50px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-`
-const BubbleLine = styled.div`
-    height: 1px;
-    border-bottom: 1px solid gray;
-`
-const ButtonRed = styled.button`
-    height: 35px;
-    width: 100px;
-    border: 1px solid hsl(11, 100%, 50%);
-    border-radius: 8px;
-    background-color: white;
-`
-const InputStyled = styled.input`
-    font-size: 20px;
-    font-weight: bold;
-    width: 45px;
-    text-align: right;
-    background-color: rgba(0,0,0,0);
-    border: 0 solid black;
-`
+import { BubbleGroup, BubbleItem, BubbleLine, ButtonRed, InputStyled } from "../style/styled.js";
 
 function Settings() {
     const navigate = useNavigate()

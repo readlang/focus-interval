@@ -89,8 +89,37 @@ export const H5B = styled(H1)`
   font-weight: normal;
   margin: 1px 0 0 0;
 `
-
-
+export const BubbleGroup = styled.div`
+  margin: 25px 10px;
+  padding: 0 20px;
+  background-color: hsl(0, 0%, 95%);
+  border-radius: 10px;
+`
+export const BubbleItem = styled.div`
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+`
+export const BubbleLine = styled.div`
+  height: 1px;
+  border-bottom: 1px solid gray;
+`
+export const ButtonRed = styled.button`
+  height: 35px;
+  width: auto;
+  border: 1px solid hsl(11, 100%, 50%);
+  border-radius: 8px;
+  background-color: white;
+`
+export const InputStyled = styled.input`
+  font-size: 20px;
+  font-weight: bold;
+  width: 45px;
+  text-align: right;
+  background-color: rgba(0,0,0,0);
+  border: 0 solid black;
+`
 
 
 
