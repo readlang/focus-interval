@@ -28,9 +28,24 @@ const ButtonRed = styled.button`
     border-radius: 8px;
     background-color: white;
 `
+const InputStyled = styled.input`
+    font-size: 20px;
+    font-weight: bold;
+    width: 45px;
+    text-align: right;
+    background-color: rgba(0,0,0,0);
+    border: 0 solid black;
+`
 
 function Settings() {
     const navigate = useNavigate()
+    const [aiTimer, setAiTimer] = useState(15)
+    const [aiAlarm, setAiAlarm] = useState(true)
+    const [pause, setPause] = useState(1)
+    const [taskTimer, setTaskTimer] = useState(30)
+    const [taskAlarm, setTaskAlarm] = useState(true)
+    const [lotMore, setLotMore] = useState(30)
+    const [littleMore, setLittleMore] = useState(15)
 
     return(
         <Canvas>
@@ -42,27 +57,23 @@ function Settings() {
 
             <ScrollableList>
                 <BubbleGroup>
-                    <BubbleItem> <H5B>Default Attention Interval</H5B> <H3>5:00</H3></BubbleItem>
+                    <BubbleItem> <H5B>Default Attention Interval</H5B> <div> <InputStyled type="number" pattern="\d*" defaultValue={"15"}/> <span>min</span> </div> </BubbleItem>
                     <BubbleLine/>
-                    <BubbleItem> <H5B>Attention Interval Alarm</H5B> 
-                        <IconButton onClick={()=>console.log(`Mark complete.`)}> <i className="bi bi-check-circle" style={{fontSize: 25, color: 'black'}}/> </IconButton> 
-                    </BubbleItem>
+                    <BubbleItem> <H5B>Attention Interval Alarm</H5B> <input type="checkbox" style={{transform: "scale(1.5)", margin: "0 20px"}}/> </BubbleItem>
                     <BubbleLine/>
-                    <BubbleItem> <H5B>Pause Timer Amount</H5B> <H3>1:00</H3></BubbleItem>
+                    <BubbleItem> <H5B>Pause Timer Amount</H5B> <div> <InputStyled type="number" pattern="\d*" defaultValue={"1"}/> <span>min</span> </div> </BubbleItem>
                 </BubbleGroup>
 
                 <BubbleGroup>
-                    <BubbleItem> <H5B>Default Task Timer</H5B> <H3>30:00</H3></BubbleItem>
+                    <BubbleItem> <H5B>Default Task Timer</H5B> <div> <InputStyled type="number" pattern="\d*" defaultValue={"30"}/> <span>min</span> </div>  </BubbleItem>
                     <BubbleLine/>
-                    <BubbleItem> <H5B>Current Task Alarm</H5B> 
-                        <IconButton onClick={()=>console.log(`Mark complete.`)}> <i className="bi bi-check-circle" style={{fontSize: 25, color: 'black'}}/> </IconButton> 
-                    </BubbleItem>
+                    <BubbleItem> <H5B>Current Task Alarm</H5B> <input type="checkbox" style={{transform: "scale(1.5)", margin: "0 20px"}}/> </BubbleItem>
                 </BubbleGroup>
 
                 <BubbleGroup>
-                    <BubbleItem> <H5B>A Lot More Time</H5B> <H3>30:00</H3></BubbleItem>
+                    <BubbleItem> <H5B>A Lot More Time</H5B> <div> <InputStyled type="number" pattern="\d*" defaultValue={"30"}/> <span>min</span> </div> </BubbleItem>
                     <BubbleLine/>
-                    <BubbleItem> <H5B>A Little More Time</H5B> <H3>5:00</H3></BubbleItem>
+                    <BubbleItem> <H5B>A Little More Time</H5B> <div> <InputStyled type="number" pattern="\d*" defaultValue={"15"}/> <span>min</span> </div> </BubbleItem>
                 </BubbleGroup>
 
                 <BubbleGroup>
@@ -71,17 +82,7 @@ function Settings() {
                     <BubbleItem style={{justifyContent: "center"}}> <ButtonRed><H5B style={{color: "hsl(11, 100%, 50%)"}} >Sign Out</H5B></ButtonRed> </BubbleItem>
                 </BubbleGroup>
 
-                <H5 style={{margin: "30px 10px", textAlign: "center" }}>App crafted with care in Seattle by Read Langworthy.</H5>
-
-                <BubbleGroup>
-                    <BubbleItem> <H5B>Signed In As</H5B> <form> <input style={{fontSize: 20, fontWeight: "bold", width: "100px", backgroundColor: "rgba(0, 0, 0, 0", border: "0 solid black"}} type="text" defaultValue={"RolandB"}></input></form></BubbleItem>
-                    <BubbleLine/>
-                    <BubbleItem> <H5B>Default Timer</H5B> <form> <input type="number" pattern="\d*" defaultValue={"30"}></input></form></BubbleItem>
-                    <BubbleLine/>
-                    <BubbleItem> <H5B>Alarm On</H5B> <form> <input type="checkbox" style={{fontSize: "30px"}}></input></form> </BubbleItem>
-                </BubbleGroup>
-                
-                
+                <H5 style={{margin: "30px 10px", textAlign: "center" }}>App crafted with care in Seattle by Read Langworthy.</H5>                
             </ScrollableList>
         </Canvas>
     )
