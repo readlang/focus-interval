@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import styled from "styled-components";
 import { H1, H2, H3, H4, H5, H6, H5B, blueUI } from "../style/styled.js";
@@ -17,16 +17,20 @@ const CurrentArea = styled.div`
     border-bottom: 1px solid black;
 `
 
-const taskArray = ["Take out trash", "Write that email", "Plan roadmap", "prepare mockup"]
-
 function TaskView() {
+    const dispatch = useDispatch()
     const navigate = useNavigate()
+    let listId = parseInt(useParams().listId) // grab param out of url
+    let list = useSelector(state => state.lists.userLists).find(x => x.id === listId)  // find the appropriate list out of all the lists
+    console.log(list)
+    const tasks = useSelector(state => state.tasks.userTasks).filter(task => (task.list_id === listId))  // find only the tasks related to this list
+    console.log(tasks)
 
     return(
         <Canvas>
             <Header>
-                <IconButton onClick={()=>navigate("/lists")}> <i className="bi bi-chevron-left" style={{fontSize: 25, color: `${blueUI}`}}/><H5B style={{color: `${blueUI}`}}>lists</H5B> </IconButton>
-                <H3>Tasks</H3>
+                <IconButton onClick={()=>navigate("/")}> <i className="bi bi-chevron-left" style={{fontSize: 25, color: `${blueUI}`}}/><H5B style={{color: `${blueUI}`}}>lists</H5B> </IconButton>
+                <H3>{list.list_name}</H3>
                 <div style={{width: 77}}/> 
             </Header>
 
@@ -51,15 +55,15 @@ function TaskView() {
             </CurrentArea>
 
             <ScrollableList>
-                {taskArray.map((element, index) =>  
-                    <ListItem key={`${index} ${element}`}> 
-                        <IconButton onClick={()=>console.log(`Mark ${element} complete.`)}> <i className="bi bi-check-circle" style={{fontSize: 25, color: 'black'}}/>  </IconButton>
-                        <RowButton  onClick={()=>console.log(`Go to ${element} task.`)}  > 
-                            <H3> {element} </H3>
-                            <H5B> 10:00 </H5B> 
+                {tasks.map((element, index) =>  
+                    <ListItem key={`${index} ${element.name}`}> 
+                        <IconButton onClick={()=>console.log(`Mark ${element.name} complete.`)}> <i className="bi bi-check-circle" style={{fontSize: 25, color: 'black'}}/>  </IconButton>
+                        <RowButton  onClick={()=>console.log(`Go to ${element.name} task.`)}  > 
+                            <H3> {element.name} </H3>
+                            <H5B> {element.length} min </H5B> 
                             <H6>This is the area the notes go.  These are notes...</H6>
                         </RowButton>     
-                        <IconButton onClick={()=>console.log(`Go to ${element} task edit.`)}> <i className="bi bi-three-dots-vertical" style={{fontSize: 25, color: 'black'}}/> </IconButton>
+                        <IconButton onClick={()=>console.log(`Go to ${element.name} task edit.`)}> <i className="bi bi-three-dots-vertical" style={{fontSize: 25, color: 'black'}}/> </IconButton>
                     </ListItem> 
                 )}    
             </ScrollableList>

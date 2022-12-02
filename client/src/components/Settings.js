@@ -35,7 +35,7 @@ function Settings() {
     return(
         <Canvas>
             <Header>
-                <OutlineButton onClick={()=>navigate("/lists")}> <i className="bi bi-x-lg" style={{fontSize: 20, color: "black"}}/> </OutlineButton>
+                <OutlineButton onClick={()=>navigate("/")}> <i className="bi bi-x-lg" style={{fontSize: 20, color: "black"}}/> </OutlineButton>
                 <H3>Settings</H3>
                 <div style={{width: 35}}/> 
             </Header>
@@ -72,6 +72,15 @@ function Settings() {
                 </BubbleGroup>
 
                 <H5 style={{margin: "30px 10px", textAlign: "center" }}>App crafted with care in Seattle by Read Langworthy.</H5>
+
+                <BubbleGroup>
+                    <BubbleItem> <H5B>Signed In As</H5B> <form> <input style={{fontSize: 20, fontWeight: "bold", width: "100px", backgroundColor: "rgba(0, 0, 0, 0", border: "0 solid black"}} type="text" defaultValue={"RolandB"}></input></form></BubbleItem>
+                    <BubbleLine/>
+                    <BubbleItem> <H5B>Default Timer</H5B> <form> <input type="number" pattern="\d*" defaultValue={"30"}></input></form></BubbleItem>
+                    <BubbleLine/>
+                    <BubbleItem> <H5B>Alarm On</H5B> <form> <input type="checkbox" style={{fontSize: "30px"}}></input></form> </BubbleItem>
+                </BubbleGroup>
+                
                 
             </ScrollableList>
         </Canvas>

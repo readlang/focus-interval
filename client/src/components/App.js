@@ -28,8 +28,7 @@ function App() {
       <Error />
       <Routes>
         <Route path="/" element={<ListView />} />
-        <Route path="lists" element={<ListView />} />
-        <Route path="tasks" element={<TaskView />} />
+        <Route path="list/:listId/tasks" element={<TaskView />} />
         <Route path="settings" element={<Settings/>} />
       </Routes>
     </>
