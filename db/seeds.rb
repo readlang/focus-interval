@@ -33,7 +33,8 @@ ActiveRecord::Base.connection.reset_pk_sequence!('lists')
 6.times do
     List.create!([{
         user_id: rand(3) + 1,
-        list_name: Faker::Hobby.activity,
+        name: Faker::Hobby.activity,
+        details: "details here...",
         order: ""
     }])
 end
@@ -44,6 +45,7 @@ ActiveRecord::Base.connection.reset_pk_sequence!('tasks')
     Task.create!([{
         list_id: rand(6) + 1,
         name: Faker::Company.bs,
+        details: "details here...",
         length: rand(30) + 1,
         status: "incomplete"
     }])

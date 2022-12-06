@@ -7,10 +7,9 @@ import { Canvas, Header, ScrollableList, ListItem, Footer, IconButton, OutlineBu
 import { BubbleGroup, BubbleItem, BubbleLine, ButtonRed, InputStyled } from "../style/styled.js";
 
 const Background = styled.div`
-    display: block; 
+    display: flex; 
     position: fixed; /* Stay in place */
     z-index: 1; /* Sit on top */
-    padding-top: 50%; /* Location of the box */
     left: 0;
     top: 0;
     width: 100%; /* Full width */
@@ -28,18 +27,30 @@ const Window = styled.div`
     border-radius: 10px;
 `
 
-function Modal({setShowModal}) {
-    function close() {
+function ModalAddEdit({showModal, setShowModal, modalEdit, setModalEdit}) {
+    const [name, setName] = useState(modalEdit.list_name ? modalEdit.list_name : "")
+    const [timer, setTimer] = useState(modalEdit.length ? modalEdit.length : "")
+    const [details, setDetails] = useState(modalEdit.details ? modalEdit.details : "")
+
+    // useEffect(()=> {
+    //     modalEdit.list_name ? name = modalEdit.list_name : null
+
+    // }, [])
+
+    function save() {
+        console.log("save")
         setShowModal(false)
     }
+
     return(
-        <Background>
-            <Window>
+        <Background onClick={()=>setShowModal(false)}>
+            <Window onClick={(e)=>e.stopPropagation()}>
                 <div style={{display: "flex", justifyContent: "space-between", margin: "0 10px"}}>
-                    <IconButton onClick={()=>close()}><H5B style={{color: blueUI}}>Cancel</H5B></IconButton>
-                    <H3>New Task</H3>
-                    <IconButton><H5B style={{color: blueUI, fontWeight: "bold"}}>Save</H5B></IconButton>
+                    <IconButton onClick={()=>setShowModal(false)}><H5B style={{color: blueUI}}>Cancel</H5B></IconButton>
+                    <H3>{showModal.slice(0,4) === "task" ? "Edit Task" : "Edit List"}</H3>
+                    <IconButton onClick={save}><H5B style={{color: blueUI, fontWeight: "bold"}}>Save</H5B></IconButton>
                 </div>
+                {showModal.slice(0,4) === "task" ? 
                 <BubbleGroup>
                     <BubbleItem> <H5B>Name</H5B> <InputStyled type="text" defaultValue={"New Task"} style={{width: "200px"}} /> </BubbleItem>
                     <BubbleLine/>
@@ -49,10 +60,18 @@ function Modal({setShowModal}) {
                     <BubbleLine/>
                     <BubbleItem style={{justifyContent: "center"}}> <ButtonRed><H5B style={{color: "hsl(11, 100%, 50%)"}} >&emsp;Delete Task&emsp;</H5B></ButtonRed> </BubbleItem>
                 </BubbleGroup>
+                : 
+                <BubbleGroup>
+                    <BubbleItem> <H5B>List Name</H5B> <InputStyled type="text" defaultValue={"New List"} style={{width: "200px"}} /> </BubbleItem>
+                    <BubbleLine/>
+                    <BubbleItem> <H5B>Details&nbsp;</H5B> <InputStyled type="text" placeholder="optional notes..." style={{width: "100%", fontSize: "16px", fontWeight: "bold"}} />  </BubbleItem>
+                    <BubbleLine/>
+                    <BubbleItem style={{justifyContent: "center"}}> <ButtonRed><H5B style={{color: "hsl(11, 100%, 50%)"}} >&emsp;Delete List&emsp;</H5B></ButtonRed> </BubbleItem>
+                </BubbleGroup>
+                }
             </Window>
-
         </Background>
     )
 }
 
-export default Modal;
+export default ModalAddEdit;

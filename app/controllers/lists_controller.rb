@@ -43,11 +43,11 @@ class ListsController < ApplicationController
     private
 
     def create_params
-        params.permit(:user_id, :list_name, :order )
+        params.permit(:user_id, :name, :details, :order )
     end
 
     def edit_params
-        params.permit( :list_name, :order )
+        params.permit( :name, :details, :order )
     end
 
 end

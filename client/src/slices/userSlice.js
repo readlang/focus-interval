@@ -38,14 +38,13 @@ export const userSessionLogIn = () => (dispatch) => {
 
 // New user signup - creates session cookie
 export const userSignUp = (
-    username, password, passwordConfirm, email, profileImage, city, state, country
+    username, password, passwordConfirm, email
     ) => (dispatch) => {
     fetch("/signup", {
         method: "post",
         headers: {'content-type': 'application/json'},
         body: JSON.stringify({username: username, password: password, 
-          password_confirmation: passwordConfirm, email: email, profile_image: profileImage, 
-          city: city, state: state, country: country})
+          password_confirmation: passwordConfirm, email: email})
     })
     .then(resp => resp.json())
     .then(data => data.errors ? dispatch(loadErrors(data.errors)) : dispatch(loadUser(data)) )
@@ -61,12 +60,12 @@ export const userLogOut = () => (dispatch) => {
 }
 
 // Edit user profile info
-export const userEdit = ( userId, email, profileImage, city, state, country ) => (dispatch) => {
+export const userEdit = ( userId, email, interval, preferences ) => (dispatch) => {
     fetch(`/users/${userId}`, {
         method: 'put',
         headers: {'content-type': 'application/json'},
-        body: JSON.stringify({ email: email, profile_image: profileImage, 
-          city: city, state: state, country: country })
+        body: JSON.stringify({ email: email, interval: interval, 
+          preferences: preferences })
     })
     .then(resp => resp.json())
     .then(data => data.errors ? dispatch(loadErrors(data.errors)) : dispatch(loadUser(data)) )

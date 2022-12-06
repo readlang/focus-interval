@@ -4,7 +4,7 @@ import { useSelector, useDispatch } from "react-redux";
 import styled from "styled-components";
 import { H1, H2, H3, H4, H5, H6, H5B, blueUI } from "../style/styled.js";
 import { Canvas, Header, ScrollableList, ListItem, Footer, IconButton, OutlineButton, RowButton } from "../style/styled.js";
-import Modal from "./Modal.js";
+import ModalAddEdit from "./ModalAddEdit";
 
 const AttentionArea = styled.div`
     margin: 4px 10px 0;
@@ -26,7 +26,7 @@ function TaskView() {
     console.log(list)
     const tasks = useSelector(state => state.tasks.userTasks).filter(task => (task.list_id === listId))  // find only the tasks related to this list
     console.log(tasks)
-    const [showModal, setShowModal] = useState(false)
+    const [showModal, setShowModal] = useState(false)  // possible states: false, listNew, listEdit, taskNew, taskEdit
 
     if (!list) {
         return(<div>Loading User and List information...</div>)
@@ -66,17 +66,17 @@ function TaskView() {
                         <RowButton  onClick={()=>console.log(`Go to ${element.name} task.`)}  > 
                             <H3> {element.name} </H3>
                             <H5B> {element.length} min </H5B> 
-                            <H6>This is the area the notes go.  These are notes...</H6>
+                            <H6> {element.details} </H6>
                         </RowButton>     
                         <IconButton onClick={()=>console.log(`Go to ${element.name} task edit.`)}> <i className="bi bi-three-dots-vertical" style={{fontSize: 25, color: 'black'}}/> </IconButton>
                     </ListItem> 
                 )}    
             </ScrollableList>
-            {showModal ? <Modal setShowModal={setShowModal}/> : null }
+            {showModal ? <ModalAddEdit showModal={showModal} setShowModal={setShowModal}/> : null }
              
 
             <Footer> 
-                <IconButton onClick={()=>setShowModal(true)}> 
+                <IconButton onClick={()=>setShowModal("taskNew")}> 
                     <i className="bi bi-plus-circle-fill" style={{fontSize: 25, color: `${blueUI}` }} />  
                     <H5B style={{color: `${blueUI}`}}> &nbsp; New Task &emsp; &emsp;</H5B> 
                 </IconButton>

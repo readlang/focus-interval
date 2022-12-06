@@ -27,11 +27,11 @@ export const getLists = () => (dispatch) => {
     })
 }
 
-export const createList = ( userId, listName, order ) => (dispatch) => {
+export const createList = ( userId, name, details, order ) => (dispatch) => {
     fetch("/lists", {
         method: 'post',
         headers: {'content-type': 'application/json'},
-        body: JSON.stringify({ user_id: userId, list_name: listName, order: order })
+        body: JSON.stringify({ user_id: userId, name: name, details: details, order: order })
     })
     .then(resp => resp.json())
     .then(data => {
@@ -40,11 +40,11 @@ export const createList = ( userId, listName, order ) => (dispatch) => {
     })
 }
 
-export const editList = ( listId, listName, order ) => (dispatch) => {
+export const editList = ( listId, name, details, order ) => (dispatch) => {
     fetch(`/lists/${listId}/`, {
         method: 'put',
         headers: {'content-type': 'application/json'},
-        body: JSON.stringify({ list_name: listName, order: order  })
+        body: JSON.stringify({ name: name, details: details, order: order  })
     })
     .then(resp => resp.json())
     .then(data => {

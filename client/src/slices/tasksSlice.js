@@ -27,11 +27,11 @@ export const getTasks = () => (dispatch) => {
     })
 }
 
-export const createTask = ( listId, name, length, status ) => (dispatch) => {
+export const createTask = ( listId, name, details, length, status ) => (dispatch) => {
     fetch("/tasks", {
         method: 'post',
         headers: {'content-type': 'application/json'},
-        body: JSON.stringify({ list_id: listId, name: name, length: length, status: status })
+        body: JSON.stringify({ list_id: listId, name: name, details: details, length: length, status: status })
     })
     .then(resp => resp.json())
     .then(data => {
@@ -40,11 +40,11 @@ export const createTask = ( listId, name, length, status ) => (dispatch) => {
     })
 }
 
-export const editTask = ( taskId, listId, name, length, status ) => (dispatch) => {
+export const editTask = ( taskId, listId, name, details, length, status ) => (dispatch) => {
     fetch(`/tasks/${taskId}/`, {
         method: 'put',
         headers: {'content-type': 'application/json'},
-        body: JSON.stringify({ list_id: listId, name: name, length: length, status: status })
+        body: JSON.stringify({ list_id: listId, name: name, details: details, length: length, status: status })
     })
     .then(resp => resp.json())
     .then(data => {

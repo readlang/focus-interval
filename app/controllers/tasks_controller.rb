@@ -38,11 +38,11 @@ class TasksController < ApplicationController
     private
 
     def create_params
-        params.permit(:list_id, :name, :length, :status )
+        params.permit(:list_id, :name, :details, :length, :status )
     end
 
     def edit_params
-        params.permit(:list_id, :name, :length, :status )
+        params.permit(:list_id, :name, :details, :length, :status )
     end
 
 end
