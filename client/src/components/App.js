@@ -10,6 +10,7 @@ import UserPage from "./UserPage"
 import ListView from "./ListView"
 import TaskView from "./TaskView"
 import Settings from "./Settings"
+import Timer from "./Timer"
 
 function App() {
   const user = useSelector((state)=>state.user.value)
@@ -30,6 +31,7 @@ function App() {
         <Route path="/" element={<ListView />} />
         <Route path="list/:listId/tasks" element={<TaskView />} />
         <Route path="settings" element={<Settings/>} />
+        <Route path="timer" element={<Timer/>} />
       </Routes>
     </>
   )
