@@ -5,6 +5,8 @@ import styled from "styled-components";
 import { H1, H2, H3, H4, H5, H6, H5B, blueUI } from "../style/styled.js";
 import { Canvas, Header, ScrollableList, ListItem, Footer, IconButton, OutlineButton, RowButton } from "../style/styled.js";
 import { BubbleGroup, BubbleItem, BubbleLine, ButtonRed, InputStyled } from "../style/styled.js";
+import { createTask, editTask, deleteTask } from "../slices/tasksSlice";
+import { createList, editList, deleteList } from "../slices/listsSlice";
 
 const Background = styled.div`
     display: flex; 
@@ -28,17 +30,39 @@ const Window = styled.div`
 `
 
 function ModalAddEdit({showModal, setShowModal, modalEdit, setModalEdit}) {
-    const [name, setName] = useState(modalEdit.list_name ? modalEdit.list_name : "")
-    const [timer, setTimer] = useState(modalEdit.length ? modalEdit.length : "")
+    const dispatch = useDispatch()
+    const user = useSelector((state)=>state.user.value)
+
+    const [name, setName] = useState(modalEdit.name ? modalEdit.name : "")
+    const [timer, setTimer] = useState(modalEdit.length ? modalEdit.length : "15")
     const [details, setDetails] = useState(modalEdit.details ? modalEdit.details : "")
 
-    // useEffect(()=> {
-    //     modalEdit.list_name ? name = modalEdit.list_name : null
 
-    // }, [])
 
     function save() {
         console.log("save")
+        switch (showModal) {
+            case "listNew":
+                dispatch(createList(user.id, name, details))
+                break;
+            case "listEdit":
+                dispatch(editList(modalEdit.id, name, details))     
+                break;
+            case "taskNew":
+                dispatch(createTask(modalEdit, name, details, timer, "incomplete"))
+                break;
+            case "taskEdit":
+                dispatch(editTask( modalEdit.id, modalEdit.list_id, name, details, timer, "incomplete" ))
+                break;
+            default:
+                console.log("error: none saved")
+            break;
+        }
+        setShowModal(false)
+    }
+
+    function deleteItem() {
+        console.log("delete")
         setShowModal(false)
     }
 
@@ -47,24 +71,29 @@ function ModalAddEdit({showModal, setShowModal, modalEdit, setModalEdit}) {
             <Window onClick={(e)=>e.stopPropagation()}>
                 <div style={{display: "flex", justifyContent: "space-between", margin: "0 10px"}}>
                     <IconButton onClick={()=>setShowModal(false)}><H5B style={{color: blueUI}}>Cancel</H5B></IconButton>
-                    <H3>{showModal.slice(0,4) === "task" ? "Edit Task" : "Edit List"}</H3>
+                    <H3>{showModal.slice(0,4) === "task" ? "Edit Task" : "Edit List"}</H3>   {/* doesn't seem to be working here */}
                     <IconButton onClick={save}><H5B style={{color: blueUI, fontWeight: "bold"}}>Save</H5B></IconButton>
                 </div>
                 {showModal.slice(0,4) === "task" ? 
                 <BubbleGroup>
-                    <BubbleItem> <H5B>Name</H5B> <InputStyled type="text" defaultValue={"New Task"} style={{width: "200px"}} /> </BubbleItem>
+                    <BubbleItem> <H5B>Name&nbsp;</H5B> <InputStyled type="text" placeholder="New Task" style={{width: "100%"}} 
+                        value={name} onChange={e=>setName(e.target.value)} /> </BubbleItem>
                     <BubbleLine/>
-                    <BubbleItem> <H5B>Task Timer</H5B> <div> <InputStyled type="number" pattern="\d*" defaultValue={"15"}/> <span>min</span> </div> </BubbleItem>
+                    <BubbleItem> <H5B>Task Timer</H5B> <div> <InputStyled type="number" pattern="\d*"  
+                        value={timer} onChange={e=>setTimer(e.target.value)} /> <span>min</span> </div> </BubbleItem>
                     <BubbleLine/>
-                    <BubbleItem> <H5B>Details&nbsp;</H5B> <InputStyled type="text" placeholder="optional notes..." style={{width: "100%", fontSize: "16px", fontWeight: "bold"}} />  </BubbleItem>
+                    <BubbleItem> <H5B>Details&nbsp;</H5B> <InputStyled type="text" placeholder="optional notes..." style={{width: "100%", fontSize: "16px", fontWeight: "bold"}} 
+                        value={details} onChange={e=>setDetails(e.target.value)} />  </BubbleItem>
                     <BubbleLine/>
-                    <BubbleItem style={{justifyContent: "center"}}> <ButtonRed><H5B style={{color: "hsl(11, 100%, 50%)"}} >&emsp;Delete Task&emsp;</H5B></ButtonRed> </BubbleItem>
+                    <BubbleItem style={{justifyContent: "center"}}> <ButtonRed onClick={deleteItem}><H5B style={{color: "hsl(11, 100%, 50%)"}} >&emsp;Delete Task&emsp;</H5B></ButtonRed> </BubbleItem>
                 </BubbleGroup>
                 : 
                 <BubbleGroup>
-                    <BubbleItem> <H5B>List Name</H5B> <InputStyled type="text" defaultValue={"New List"} style={{width: "200px"}} /> </BubbleItem>
+                    <BubbleItem> <H5B>List Name</H5B> <InputStyled type="text" placeholder="New List" style={{width: "200px"}} 
+                        value={name} onChange={e=>setName(e.target.value)} /> </BubbleItem>
                     <BubbleLine/>
-                    <BubbleItem> <H5B>Details&nbsp;</H5B> <InputStyled type="text" placeholder="optional notes..." style={{width: "100%", fontSize: "16px", fontWeight: "bold"}} />  </BubbleItem>
+                    <BubbleItem> <H5B>Details&nbsp;</H5B> <InputStyled type="text" placeholder="optional notes..." style={{width: "100%", fontSize: "16px", fontWeight: "bold"}} 
+                        value={details} onChange={e=>setDetails(e.target.value)} />  </BubbleItem>
                     <BubbleLine/>
                     <BubbleItem style={{justifyContent: "center"}}> <ButtonRed><H5B style={{color: "hsl(11, 100%, 50%)"}} >&emsp;Delete List&emsp;</H5B></ButtonRed> </BubbleItem>
                 </BubbleGroup>

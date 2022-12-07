@@ -27,6 +27,7 @@ function TaskView() {
     const tasks = useSelector(state => state.tasks.userTasks).filter(task => (task.list_id === listId))  // find only the tasks related to this list
     console.log(tasks)
     const [showModal, setShowModal] = useState(false)  // possible states: false, listNew, listEdit, taskNew, taskEdit
+    const [modalEdit, setModalEdit] = useState(false)
 
     if (!list) {
         return(<div>Loading User and List information...</div>)
@@ -35,7 +36,7 @@ function TaskView() {
         <Canvas>
             <Header>
                 <IconButton onClick={()=>navigate("/")}> <i className="bi bi-chevron-left" style={{fontSize: 25, color: `${blueUI}`}}/><H5B style={{color: `${blueUI}`}}>lists</H5B> </IconButton>
-                <H3>{list.list_name}</H3>
+                <H3>{list.name}</H3>
                 <div style={{width: 77}}/> 
             </Header>
 
@@ -68,15 +69,15 @@ function TaskView() {
                             <H5B> {element.length} min </H5B> 
                             <H6> {element.details} </H6>
                         </RowButton>     
-                        <IconButton onClick={()=>console.log(`Go to ${element.name} task edit.`)}> <i className="bi bi-three-dots-vertical" style={{fontSize: 25, color: 'black'}}/> </IconButton>
+                        <IconButton onClick={()=> {setShowModal("taskEdit"); setModalEdit(element)} }> <i className="bi bi-three-dots-vertical" style={{fontSize: 25, color: 'black'}}/> </IconButton>
                     </ListItem> 
                 )}    
             </ScrollableList>
-            {showModal ? <ModalAddEdit showModal={showModal} setShowModal={setShowModal}/> : null }
+            {showModal ? <ModalAddEdit showModal={showModal} setShowModal={setShowModal} modalEdit={modalEdit} setModalEdit={setModalEdit} /> : null }
              
 
             <Footer> 
-                <IconButton onClick={()=>setShowModal("taskNew")}> 
+                <IconButton onClick={()=>{setShowModal("taskNew"); setModalEdit(listId)}}> 
                     <i className="bi bi-plus-circle-fill" style={{fontSize: 25, color: `${blueUI}` }} />  
                     <H5B style={{color: `${blueUI}`}}> &nbsp; New Task &emsp; &emsp;</H5B> 
                 </IconButton>
