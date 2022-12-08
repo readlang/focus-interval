@@ -23,11 +23,32 @@ function TaskView() {
     const navigate = useNavigate()
     let listId = parseInt(useParams().listId) // grab param out of url
     let list = useSelector(state => state.lists.userLists).find(x => x.id === listId)  // find the appropriate list out of all the lists
-    console.log(list)
     const tasks = useSelector(state => state.tasks.userTasks).filter(task => (task.list_id === listId))  // find only the tasks related to this list
-    console.log(tasks)
     const [showModal, setShowModal] = useState(false)  // possible states: false, listNew, listEdit, taskNew, taskEdit
     const [modalEdit, setModalEdit] = useState(false)
+
+    const [timerOn, setTimerOn] = useState(false)
+    const [attTimer, setAttTimer] = useState(5)
+
+    useEffect(()=>{
+        let intervalId
+        if (timerOn) {
+            intervalId = setInterval(() => {
+                setAttTimer(attTimer => --attTimer)
+            }, 1000);
+            console.log("attTimer:", attTimer )
+            if (attTimer <= 0) {
+                clearInterval(intervalId); 
+                setTimerOn(false)
+                console.log("finished")
+            }
+            return function() { clearInterval(intervalId)} // req'd to prevent runaway counter
+        } else {
+            clearInterval(intervalId)
+        }
+    }, [timerOn, attTimer])
+        
+    
 
     if (!list) {
         return(<div>Loading User and List information...</div>)
@@ -42,13 +63,15 @@ function TaskView() {
 
             <AttentionArea>
                 <div>
-                    <IconButton onClick={()=>console.log("Restart timer.")}> <i className="bi bi-arrow-clockwise" style={{fontSize: 25, marginRight: "5px"}}/> </IconButton>
+                    <IconButton onClick={()=> setAttTimer(5) }> <i className="bi bi-arrow-clockwise" style={{fontSize: 25, marginRight: "5px"}}/> </IconButton>
                     <div style={{display: "inline-block"}}>
                         <H6>ATTENTION INTERVAL</H6>
-                        <div> <H1 style={{display: "inline"}}> 3:24</H1> &ensp; <OutlineButton onClick={()=>console.log("Add 1 minute.")} style={{position: "relative", top: "-5px"}}> <H5> +1m </H5> </OutlineButton> </div> 
+                        <div> <H1 style={{display: "inline"}}> {attTimer}</H1> &ensp; <OutlineButton onClick={()=>console.log("Add 1 minute.")} style={{position: "relative", top: "-5px"}}> <H5> +1m </H5> </OutlineButton> </div> 
                     </div>
                 </div>
-                <IconButton onClick={()=>console.log("Start Timer.")}> <i className="bi bi-play-btn" style={{fontSize: 35, marginRight: "5px", color: `${blueUI}`}}/> </IconButton>
+                <IconButton onClick={()=>setTimerOn(!timerOn)}> 
+                    {timerOn ? "pause" : <i className="bi bi-play-btn" style={{fontSize: 35, marginRight: "5px", color: `${blueUI}`}}/> }   
+                </IconButton>
             </AttentionArea>
 
             <CurrentArea>
