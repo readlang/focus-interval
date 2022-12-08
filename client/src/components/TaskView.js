@@ -5,6 +5,7 @@ import styled from "styled-components";
 import { H1, H2, H3, H4, H5, H6, H5B, blueUI } from "../style/styled.js";
 import { Canvas, Header, ScrollableList, ListItem, Footer, IconButton, OutlineButton, RowButton } from "../style/styled.js";
 import ModalAddEdit from "./ModalAddEdit";
+import converter from "./converter";
 
 const AttentionArea = styled.div`
     margin: 4px 10px 0;
@@ -28,7 +29,7 @@ function TaskView() {
     const [modalEdit, setModalEdit] = useState(false)
 
     const [timerOn, setTimerOn] = useState(false)
-    const [attTimer, setAttTimer] = useState(5)
+    const [attTimer, setAttTimer] = useState(3605)
 
     useEffect(()=>{
         let intervalId
@@ -66,7 +67,7 @@ function TaskView() {
                     <IconButton onClick={()=> setAttTimer(5) }> <i className="bi bi-arrow-clockwise" style={{fontSize: 25, marginRight: "5px"}}/> </IconButton>
                     <div style={{display: "inline-block"}}>
                         <H6>ATTENTION INTERVAL</H6>
-                        <div> <H1 style={{display: "inline"}}> {attTimer}</H1> &ensp; <OutlineButton onClick={()=>console.log("Add 1 minute.")} style={{position: "relative", top: "-5px"}}> <H5> +1m </H5> </OutlineButton> </div> 
+                        <div> <H1 style={{display: "inline"}}> {converter(attTimer).disp }</H1> &ensp; <OutlineButton onClick={()=>setAttTimer(attTimer+60)} style={{position: "relative", top: "-5px"}}> <H5> +1m </H5> </OutlineButton> </div> 
                     </div>
                 </div>
                 <IconButton onClick={()=>setTimerOn(!timerOn)}> 
