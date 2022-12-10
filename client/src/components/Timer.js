@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 // import { useSelector, useDispatch } from "react-redux";
 import converter from "./converter";
+import ModalAttInt from "./ModalAttInt";
 
 
 function Timer() {
@@ -37,6 +38,8 @@ function Timer() {
             <button onClick={()=>setTimerOn(!timerOn)} >{timerOn ? "true" : "false"}</button>
             <button onClick={()=> setAttTimer(5)} >reset</button>
             {converter(attTimer).disp}
+
+            <ModalAttInt/>
         </>
     )
 }
