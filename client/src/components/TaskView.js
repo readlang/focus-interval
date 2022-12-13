@@ -34,26 +34,35 @@ function TaskView() {
     const [showModalAtt, setShowModalAtt] = useState(false)
 
     const [timerOn, setTimerOn] = useState(false)  // controls whether the timer is running
-    
-    const [attTimer, setAttTimer] = useState(3605)  // count down variable in seconds
+    const initialAttTimer = 5
+    const initialTaskTimer = 20
+    const [attTimer, setAttTimer] = useState(initialAttTimer)  // count down variable in seconds
+    const [taskTimer, setTaskTimer] = useState(initialTaskTimer)
 
     useEffect(()=>{
         let intervalId
         if (timerOn) {
             intervalId = setInterval(() => {
                 setAttTimer(attTimer => --attTimer)
+                setTaskTimer(taskTimer => --taskTimer )
             }, 1000);
             console.log("attTimer:", attTimer )
             if (attTimer <= 0) {
-                clearInterval(intervalId); 
+                setAttTimer(initialAttTimer)
+                setShowModalAtt(true)
+            }
+            if (taskTimer <= 0) {
+                clearInterval(intervalId);
                 setTimerOn(false)
                 console.log("finished")
+                setShowModalAtt(false)
+                setShowModalCur(true)
             }
             return function() { clearInterval(intervalId)} // req'd to prevent runaway counter
         } else {
             clearInterval(intervalId)
         }
-    }, [timerOn, attTimer])
+    }, [timerOn, attTimer, taskTimer])
         
     
 
@@ -86,7 +95,7 @@ function TaskView() {
                 <div style={{display: "inline-block"}}>
                     <H6>CURRENT TASK</H6>
                     <H3>Roadmap update</H3>
-                    <H1 style={{display: "inline"}}>27:15</H1> &ensp; <OutlineButton onClick={()=>console.log("Add 1 minute.")} style={{position: "relative", top: "-5px"}}> <H5> +1m </H5> </OutlineButton> 
+                    <H1 style={{display: "inline"}}> {converter(taskTimer).disp} </H1> &ensp; <OutlineButton onClick={()=>console.log("Add 1 minute.")} style={{position: "relative", top: "-5px"}}> <H5> +1m </H5> </OutlineButton> 
                 </div>
             </CurrentArea>
 

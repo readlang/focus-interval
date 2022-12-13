@@ -88,15 +88,27 @@ function ModalAddEdit({showModal, setShowModal, modalEdit, setModalEdit}) {
                     <BubbleItem style={{justifyContent: "center"}}> <ButtonRed onClick={deleteItem}><H5B style={{color: "hsl(11, 100%, 50%)"}} >&emsp;Delete Task&emsp;</H5B></ButtonRed> </BubbleItem>
                 </BubbleGroup>
                 : 
-                <BubbleGroup>
-                    <BubbleItem> <H5B>List Name</H5B> <InputStyled type="text" placeholder="New List" style={{width: "200px"}} 
-                        value={name} onChange={e=>setName(e.target.value)} /> </BubbleItem>
-                    <BubbleLine/>
-                    <BubbleItem> <H5B>Details&nbsp;</H5B> <InputStyled type="text" placeholder="optional notes..." style={{width: "100%", fontSize: "16px", fontWeight: "bold"}} 
-                        value={details} onChange={e=>setDetails(e.target.value)} />  </BubbleItem>
-                    <BubbleLine/>
-                    <BubbleItem style={{justifyContent: "center"}}> <ButtonRed><H5B style={{color: "hsl(11, 100%, 50%)"}} >&emsp;Delete List&emsp;</H5B></ButtonRed> </BubbleItem>
-                </BubbleGroup>
+                <>
+                    <BubbleGroup>
+                        <BubbleItem> <H5B>List Name</H5B> <InputStyled type="text" placeholder="New List" style={{width: "200px"}} 
+                            value={name} onChange={e=>setName(e.target.value)} /> </BubbleItem>
+                        <BubbleLine/>
+                        <BubbleItem> <H5B>Details&nbsp;</H5B> <InputStyled type="text" placeholder="optional notes..." style={{width: "100%", fontSize: "16px", fontWeight: "bold"}} 
+                            value={details} onChange={e=>setDetails(e.target.value)} />  </BubbleItem>
+                        <BubbleLine/>
+                        <BubbleItem style={{justifyContent: "center"}}> 
+                           <ButtonRed style={{borderColor: blueUI}} ><H5B style={{color: blueUI }} > &emsp;Save List&emsp;</H5B></ButtonRed>  
+                        </BubbleItem>
+                    </BubbleGroup>
+                    <BubbleGroup>
+                        <BubbleItem style={{justifyContent: "center"}}> 
+                            <H5B > Delete List & Tasks&ensp;</H5B>
+                            <ButtonRed style={{height:"40px", width: "40px", borderRadius: "20px"}}>
+                                <i className="bi bi-trash3" style={{fontSize: 20, color: "red"}}/>
+                            </ButtonRed>
+                        </BubbleItem>
+                    </BubbleGroup>
+                </>
                 }
             </Window>
         </Background>

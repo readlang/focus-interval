@@ -49,7 +49,7 @@ function ModalCurTask({setShowModalCur, modalEdit, setModalEdit}) {
             <Window onClick={(e)=>e.stopPropagation()}>
                 <div style={{display: "flex", justifyContent: "space-between", margin: "0 10px"}}>
                     &emsp;&emsp;&emsp;
-                    <H3>Current Task Timer</H3> 
+                    <H3>Task Timer Complete</H3> 
                     <IconButton onClick={()=>setShowModalCur(false)}><i className="bi bi-x-lg" style={{fontSize: 25, marginRight: "-5px", backgroundColor: "hsl(11, 0%, 85%)", borderRadius: "20px", height: "35px", width: "35px"}}/></IconButton>
                 </div>
 

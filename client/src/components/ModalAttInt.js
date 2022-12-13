@@ -49,7 +49,7 @@ function ModalAttInt({setShowModalAtt, modalEdit, setModalEdit}) {
             <Window onClick={(e)=>e.stopPropagation()}>
                 <div style={{display: "flex", justifyContent: "space-between", margin: "0 10px"}}>
                     &emsp;&emsp;&emsp;
-                    <H3>Attention Interval Timer</H3> 
+                    <H3>Attention Interval Complete</H3> 
                     <IconButton onClick={()=>setShowModalAtt(false)}><i className="bi bi-x-lg" style={{fontSize: 25, marginRight: "-5px", backgroundColor: "hsl(11, 0%, 85%)", borderRadius: "20px", height: "35px", width: "35px"}}/></IconButton>
                 </div>
 
