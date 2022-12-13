@@ -6,6 +6,8 @@ import { H1, H2, H3, H4, H5, H6, H5B, blueUI } from "../style/styled.js";
 import { Canvas, Header, ScrollableList, ListItem, Footer, IconButton, OutlineButton, RowButton } from "../style/styled.js";
 import ModalAddEdit from "./ModalAddEdit";
 import converter from "./converter";
+import ModalCurTask from "./ModalCurTask.js";
+import ModalAttInt from "./ModalAttInt.js";
 
 const AttentionArea = styled.div`
     margin: 4px 10px 0;
@@ -28,8 +30,12 @@ function TaskView() {
     const [showModal, setShowModal] = useState(false)  // possible states: false, listNew, listEdit, taskNew, taskEdit
     const [modalEdit, setModalEdit] = useState(false)
 
-    const [timerOn, setTimerOn] = useState(false)
-    const [attTimer, setAttTimer] = useState(3605)
+    const [showModalCur, setShowModalCur] = useState(false)
+    const [showModalAtt, setShowModalAtt] = useState(false)
+
+    const [timerOn, setTimerOn] = useState(false)  // controls whether the timer is running
+    
+    const [attTimer, setAttTimer] = useState(3605)  // count down variable in seconds
 
     useEffect(()=>{
         let intervalId
@@ -76,7 +82,7 @@ function TaskView() {
             </AttentionArea>
 
             <CurrentArea>
-                <IconButton onClick={()=>console.log("Mark as complete.")}> <i className="bi bi-check2-circle" style={{fontSize: 25, marginRight: "5px"}}/> </IconButton>
+                <IconButton onClick={()=>setShowModalCur(true)}> <i className="bi bi-check2-circle" style={{fontSize: 25, marginRight: "5px"}}/> </IconButton>
                 <div style={{display: "inline-block"}}>
                     <H6>CURRENT TASK</H6>
                     <H3>Roadmap update</H3>
@@ -98,6 +104,8 @@ function TaskView() {
                 )}    
             </ScrollableList>
             {showModal ? <ModalAddEdit showModal={showModal} setShowModal={setShowModal} modalEdit={modalEdit} setModalEdit={setModalEdit} /> : null }
+            {showModalAtt ? <ModalAttInt setShowModalAtt={setShowModalAtt} /> : null }
+            {showModalCur ? <ModalCurTask setShowModalCur={setShowModalCur} /> : null }
              
 
             <Footer> 

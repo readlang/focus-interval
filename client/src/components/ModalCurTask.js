@@ -39,27 +39,29 @@ const ButtonBig = styled.button`
     padding: 4px;
 `
 
-function ModalAttInt({setShowModalAtt, modalEdit, setModalEdit}) {
+function ModalCurTask({setShowModalCur, modalEdit, setModalEdit}) {
     const dispatch = useDispatch()
     const user = useSelector((state)=>state.user.value)
 
 
     return(
-        <Background onClick={()=>setShowModalAtt(false)}>
+        <Background onClick={()=>setShowModalCur(false)}>
             <Window onClick={(e)=>e.stopPropagation()}>
                 <div style={{display: "flex", justifyContent: "space-between", margin: "0 10px"}}>
                     &emsp;&emsp;&emsp;
-                    <H3>Attention Interval Timer</H3> 
-                    <IconButton onClick={()=>setShowModalAtt(false)}><i className="bi bi-x-lg" style={{fontSize: 25, marginRight: "-5px", backgroundColor: "hsl(11, 0%, 85%)", borderRadius: "20px", height: "35px", width: "35px"}}/></IconButton>
+                    <H3>Current Task Timer</H3> 
+                    <IconButton onClick={()=>setShowModalCur(false)}><i className="bi bi-x-lg" style={{fontSize: 25, marginRight: "-5px", backgroundColor: "hsl(11, 0%, 85%)", borderRadius: "20px", height: "35px", width: "35px"}}/></IconButton>
                 </div>
 
                 <BubbleGroup>
                     <br/><br/>
-                    <H3>ARE YOU CURRENTLY FOCUSED?</H3>
+                    <H3>READY TO MOVE ON?</H3>
                     <br/>
-                    <ButtonBig inputColor="hsl(191, 100%, 81%)"><H2>Yes</H2><H4>I'm totally focused</H4> <H5> Lengthen Interval</H5> </ButtonBig>
-                    <ButtonBig inputColor="hsl(50, 100%, 65%)"><H2>Kinda</H2><H4>Distracted but recovered</H4> </ButtonBig>
-                    <ButtonBig inputColor="hsl(0, 100%, 75%)"><H2>No</H2><H4>I'm totally distracted</H4> <H5> Shorten Interval</H5>  </ButtonBig>
+                    <ButtonBig inputColor="hsl(191, 100%, 81%)"><H2>Yes</H2><H4>Current Task Complete</H4> <H5> Move to next task</H5> </ButtonBig>
+                    <ButtonBig inputColor="hsl(150, 100%, 87%)"><H2>Yes, But</H2><H4>Current Task Not Complete</H4> <H5> Move to next task</H5> </ButtonBig>
+                    <ButtonBig inputColor="hsl(85, 100%, 75%)"><H2>Almost</H2><H4>Need A Little More Time</H4> <H5> stay on current</H5> </ButtonBig>
+                    <ButtonBig inputColor="hsl(50, 100%, 65%)"><H2>No</H2><H4>Need A Lot More Time</H4> <H5> stay on current</H5></ButtonBig>
+                    <ButtonBig inputColor="hsl(0, 100%, 75%)"><H2>Help</H2><H4>I'm totally distracted</H4> <H5> take a moment</H5>  </ButtonBig>
                     <br/><br/>
                 </BubbleGroup>
                 
@@ -68,4 +70,4 @@ function ModalAttInt({setShowModalAtt, modalEdit, setModalEdit}) {
     )
 }
 
-export default ModalAttInt;
+export default ModalCurTask;
