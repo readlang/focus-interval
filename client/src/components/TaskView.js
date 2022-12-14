@@ -22,22 +22,37 @@ const CurrentArea = styled.div`
 `
 
 function TaskView() {
+    const user = useSelector((state)=>state.user.value)
+    
     const dispatch = useDispatch()
     const navigate = useNavigate()
     let listId = parseInt(useParams().listId) // grab param out of url
     let list = useSelector(state => state.lists.userLists).find(x => x.id === listId)  // find the appropriate list out of all the lists
     const tasks = useSelector(state => state.tasks.userTasks).filter(task => (task.list_id === listId))  // find only the tasks related to this list
+    
     const [showModal, setShowModal] = useState(false)  // possible states: false, listNew, listEdit, taskNew, taskEdit
     const [modalEdit, setModalEdit] = useState(false)
 
-    const [showModalCur, setShowModalCur] = useState(false)
-    const [showModalAtt, setShowModalAtt] = useState(false)
+    const [showModalCur, setShowModalCur] = useState(false)  // The current task modal
+    const [showModalAtt, setShowModalAtt] = useState(false)  // The attention interval modal
 
     const [timerOn, setTimerOn] = useState(false)  // controls whether the timer is running
-    const initialAttTimer = 5
-    const initialTaskTimer = 20
-    const [attTimer, setAttTimer] = useState(initialAttTimer)  // count down variable in seconds
-    const [taskTimer, setTaskTimer] = useState(initialTaskTimer)
+    const initialAttTimer = user.interval  // takes the initial attention timer out of the user object
+    
+ 
+    
+    const [attTimer, setAttTimer] = useState(77)  // count down variable in seconds
+    const [taskTimer, setTaskTimer] = useState(33)
+    
+    useEffect(()=>{
+        if (initialAttTimer) setAttTimer(initialAttTimer * 60)
+    }, [initialAttTimer])
+
+    useEffect(()=>{
+        if (tasks[0]) setTaskTimer(tasks[0].length * 60)
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    },[tasks])          /////////////////////////////////this is preventing the number from counting down
+    
 
     useEffect(()=>{
         let intervalId
@@ -46,7 +61,7 @@ function TaskView() {
                 setAttTimer(attTimer => --attTimer)
                 setTaskTimer(taskTimer => --taskTimer )
             }, 1000);
-            console.log("attTimer:", attTimer )
+            console.log("taskTimer:", taskTimer )
             if (attTimer <= 0) {
                 setAttTimer(initialAttTimer)
                 setShowModalAtt(true)
@@ -62,11 +77,11 @@ function TaskView() {
         } else {
             clearInterval(intervalId)
         }
-    }, [timerOn, attTimer, taskTimer])
+    }, [timerOn, attTimer, taskTimer, initialAttTimer])
         
     
 
-    if (!list) {
+    if (!list || !tasks) {
         return(<div>Loading User and List information...</div>)
     } else
     return(
@@ -79,7 +94,7 @@ function TaskView() {
 
             <AttentionArea>
                 <div>
-                    <IconButton onClick={()=> setAttTimer(5) }> <i className="bi bi-arrow-clockwise" style={{fontSize: 25, marginRight: "5px"}}/> </IconButton>
+                    <IconButton onClick={()=> setAttTimer(initialAttTimer) }> <i className="bi bi-arrow-clockwise" style={{fontSize: 25, marginRight: "5px"}}/> </IconButton>
                     <div style={{display: "inline-block"}}>
                         <H6>ATTENTION INTERVAL</H6>
                         <div> <H1 style={{display: "inline"}}> {converter(attTimer).disp }</H1> &ensp; <OutlineButton onClick={()=>setAttTimer(attTimer+60)} style={{position: "relative", top: "-5px"}}> <H5> +1m </H5> </OutlineButton> </div> 
@@ -94,12 +109,13 @@ function TaskView() {
                 <IconButton onClick={()=>setShowModalCur(true)}> <i className="bi bi-check2-circle" style={{fontSize: 25, marginRight: "5px"}}/> </IconButton>
                 <div style={{display: "inline-block"}}>
                     <H6>CURRENT TASK</H6>
-                    <H3>Roadmap update</H3>
+                    <H3>{tasks[0].name}</H3> {/* this line is causing an error!! the ".name" is undefined*/}
                     <H1 style={{display: "inline"}}> {converter(taskTimer).disp} </H1> &ensp; <OutlineButton onClick={()=>console.log("Add 1 minute.")} style={{position: "relative", top: "-5px"}}> <H5> +1m </H5> </OutlineButton> 
                 </div>
             </CurrentArea>
 
             <ScrollableList>
+                <H6 style={{margin: "4px 42px 0"}}>ALL TASKS</H6>
                 {tasks.map((element, index) =>  
                     <ListItem key={`${index} ${element.name}`}> 
                         <IconButton onClick={()=>console.log(`Mark ${element.name} complete.`)}> <i className="bi bi-check-circle" style={{fontSize: 25, color: 'black'}}/>  </IconButton>
