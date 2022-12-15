@@ -1,41 +1,48 @@
-# LightShip - Flatiron School Project
+# Focus Interval
 
 ## Description
-This app is a goal-tracking and social accountability platform.  With this app, users can set goals, chart a path to reach those goals, and have friends provide feedback, encouragement and accountability.  The goal of the app is to help users stay the course and reach their goals. 
+This app is like a task management tool and a pomodoro timer mashed together.  Using this tool, users will add their tasks with an estimated time for each.  There is also a "attention interval" timer, which is a repeating interval.  When the user starts the timer, the attention interval will check in at regular intervals so see if they are still on task.  When the task timer ends, it will also check in.
+
+I built this because when you're doing something tedious or unpleasant, and in the opposite state of mind as Flow, it's easy to get distracted.
+The goal is to create a tool that is better (at least for my personal needs) than the offerings from todoist, apple, or microsoft.  I also wanted this tool to work well as a mobile website, a PWA, or a desktop website.
+
+There is a joke that people attending bootcamps always make a to-do-list app.  Having gotten through Flatiron School without creating one, but wanting to push my design skills forward as a design-capable frontend engineer, I thought that now is my time.  My personal goal in creating this was to build something simple (on a technical level) that would allow me to practice my UX design and styling skills.  Although it is good programming practice, that wasn't the primary point of building the tool.
+
+I hope you enjoy using it.  Thanks for checking it out.
 <br/>
+
+![list_view](readme/List_view.png)
+![task_view](readme/Task_view.png)
+![task_modal_view](readme/Task_modal.png)
+
 
 ## Technologies Used
 - React
 - React Router
-- React Bootstrap
 - Styled Components
 - Ruby on Rails
 - Postgresql
-- Heroku
 
-The App is deployed on Heroku and available here: https://lightship.herokuapp.com/
-
-Note: The first visit to the deployed page on Heroku may take several seconds to load due to the "cold-start" on free-tier server.  Up to ~20 seconds is normal.  This is a function of it being hosted from a free-tier server on Heroku, not the app itself.  Load time is less than 1 second on "warm server."  Thank you for your patience!
-<br />
 
 ## Walkthrough
-Upon visiting the site, a user is prompted to log in for sign up.  Once logged in, the app displays a welcome screen with instructions.  A user can define goals, add other users as friends, and create tracks which are the daily or weekly tasks to move towards hitting the goal.  Once these are created, the user can create a group and add friends.  Each of the members of the group will be able to see the other member's track and their progress on this track.  The group members can also chat to offer encouragement or comments to keep everyone moving towards their goals.
+Upon visiting the site, a user is prompted to log in for sign up.  Once logged in, the user lands on the "lists" screen, where lists of tasks can be defined.  Once a list is created, opening that list will allow individual tasks to be defined, along with a time to complete.  When ready to start work, the user can press play, which starts the timer.  At regular intervals, the attention interval timer will display a modal asking the user if they are still focused.  When the timer for the individual task is up, another modal will appear, asking the user if they want to move on, add more time, etc.
+
 
 ## Setup
 If you would like to play with this project on your machine, start by **cloning** the project template repository and removing the remote:
 
 ```console
-$ git clone git@github.com:readlang/lightship.git
-$ cd lightship
+$ git clone git@github.com:readlang/focus-interval.git
+$ cd focus-interval
 $ git remote rm origin
 ```
 
 When you're ready to start playing with the code, run:
 
-```sh
-bundle install
-rails db:create
-npm install --prefix client
+```console
+$ bundle install
+$ rails db:create
+$ npm install --prefix client
 ```
 
 You can use the following commands to run the application:
