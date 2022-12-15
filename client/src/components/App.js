@@ -22,8 +22,11 @@ function App() {
     dispatch(getLists())
   }, [dispatch])
 
-  // if ( !user.id ) { return <> <UserPage/> <Error /> </>}    ///uncomment this later!!
-  // else { 
+  // the if / else serves two purposes:
+  // - it checks if user is logged in (and displays the login screen if not)
+  // - it also delays loading other pages that depend on first fetching info from server
+  if ( !user.id ) { return <> <UserPage/> <Error /> </>}    /// comment this out to bypass sign in page
+  else {                                                    /// comment this out to bypass sign in page            
     return (
     <>
       <Error />
@@ -35,7 +38,7 @@ function App() {
       </Routes>
     </>
   )
-  // }
+  }                                                          /// comment this out to bypass sign in page
 }
 
 export default App;

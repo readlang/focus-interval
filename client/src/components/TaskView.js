@@ -22,10 +22,10 @@ const CurrentArea = styled.div`
 `
 
 function TaskView() {
-    const user = useSelector((state)=>state.user.value)
-    
     const dispatch = useDispatch()
     const navigate = useNavigate()
+
+    const user = useSelector((state)=>state.user.value)
     let listId = parseInt(useParams().listId) // grab param out of url
     let list = useSelector(state => state.lists.userLists).find(x => x.id === listId)  // find the appropriate list out of all the lists
     const tasks = useSelector(state => state.tasks.userTasks).filter(task => (task.list_id === listId))  // find only the tasks related to this list
@@ -33,13 +33,12 @@ function TaskView() {
     const [showModal, setShowModal] = useState(false)  // possible states: false, listNew, listEdit, taskNew, taskEdit
     const [modalEdit, setModalEdit] = useState(false)
 
-    const [showModalCur, setShowModalCur] = useState(false)  // The current task modal
     const [showModalAtt, setShowModalAtt] = useState(false)  // The attention interval modal
-
+    const [showModalCur, setShowModalCur] = useState(false)  // The current task modal
+    
     const [timerOn, setTimerOn] = useState(false)  // controls whether the timer is running
     const initialAttTimer = user.interval  // takes the initial attention timer out of the user object
-    
- 
+    const initialTaskTimer = tasks[0] ? tasks[0].length : 33
     
     const [attTimer, setAttTimer] = useState(77)  // count down variable in seconds
     const [taskTimer, setTaskTimer] = useState(33)
@@ -49,9 +48,10 @@ function TaskView() {
     }, [initialAttTimer])
 
     useEffect(()=>{
-        if (tasks[0]) setTaskTimer(tasks[0].length * 60)
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    },[tasks])          /////////////////////////////////this is preventing the number from counting down
+        if (initialTaskTimer) setTaskTimer(initialTaskTimer * 60)
+        console.log("tasks")
+        
+    },[initialTaskTimer])        
     
 
     useEffect(()=>{
@@ -61,9 +61,8 @@ function TaskView() {
                 setAttTimer(attTimer => --attTimer)
                 setTaskTimer(taskTimer => --taskTimer )
             }, 1000);
-            console.log("taskTimer:", taskTimer )
             if (attTimer <= 0) {
-                setAttTimer(initialAttTimer)
+                setAttTimer(initialAttTimer*60)
                 setShowModalAtt(true)
             }
             if (taskTimer <= 0) {
@@ -94,7 +93,7 @@ function TaskView() {
 
             <AttentionArea>
                 <div>
-                    <IconButton onClick={()=> setAttTimer(initialAttTimer) }> <i className="bi bi-arrow-clockwise" style={{fontSize: 25, marginRight: "5px"}}/> </IconButton>
+                    <IconButton onClick={()=> setAttTimer(initialAttTimer*60) }> <i className="bi bi-arrow-clockwise" style={{fontSize: 25, marginRight: "5px"}}/> </IconButton>
                     <div style={{display: "inline-block"}}>
                         <H6>ATTENTION INTERVAL</H6>
                         <div> <H1 style={{display: "inline"}}> {converter(attTimer).disp }</H1> &ensp; <OutlineButton onClick={()=>setAttTimer(attTimer+60)} style={{position: "relative", top: "-5px"}}> <H5> +1m </H5> </OutlineButton> </div> 
@@ -109,8 +108,8 @@ function TaskView() {
                 <IconButton onClick={()=>setShowModalCur(true)}> <i className="bi bi-check2-circle" style={{fontSize: 25, marginRight: "5px"}}/> </IconButton>
                 <div style={{display: "inline-block"}}>
                     <H6>CURRENT TASK</H6>
-                    <H3>{tasks[0].name}</H3> {/* this line is causing an error!! the ".name" is undefined*/}
-                    <H1 style={{display: "inline"}}> {converter(taskTimer).disp} </H1> &ensp; <OutlineButton onClick={()=>console.log("Add 1 minute.")} style={{position: "relative", top: "-5px"}}> <H5> +1m </H5> </OutlineButton> 
+                    <H3>{ tasks[0] ? tasks[0].name : "loading task name" }</H3> 
+                    <H1 style={{display: "inline"}}> {converter(taskTimer).disp} </H1> &ensp; <OutlineButton onClick={()=>setTaskTimer(taskTimer+60)} style={{position: "relative", top: "-5px"}}> <H5> +1m </H5> </OutlineButton> 
                 </div>
             </CurrentArea>
 
@@ -132,7 +131,6 @@ function TaskView() {
             {showModalAtt ? <ModalAttInt setShowModalAtt={setShowModalAtt} /> : null }
             {showModalCur ? <ModalCurTask setShowModalCur={setShowModalCur} /> : null }
              
-
             <Footer> 
                 <IconButton onClick={()=>{setShowModal("taskNew"); setModalEdit(listId)}}> 
                     <i className="bi bi-plus-circle-fill" style={{fontSize: 25, color: `${blueUI}` }} />  
