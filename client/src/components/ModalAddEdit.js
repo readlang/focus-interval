@@ -100,7 +100,7 @@ function ModalAddEdit({showModal, setShowModal, modalEdit, setModalEdit}) {
                            <ButtonRed style={{borderColor: blueUI}} ><H5B style={{color: blueUI }} > &emsp;Save List&emsp;</H5B></ButtonRed>  
                         </BubbleItem>
                     </BubbleGroup>
-                    <BubbleGroup>
+                    <BubbleGroup style={{width: "230px", margin: "25px auto"}}>
                         <BubbleItem style={{justifyContent: "center"}}> 
                             <H5B > Delete List & Tasks&ensp;</H5B>
                             <ButtonRed style={{height:"40px", width: "40px", borderRadius: "20px"}}>

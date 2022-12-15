@@ -60,12 +60,11 @@ export const userLogOut = () => (dispatch) => {
 }
 
 // Edit user profile info
-export const userEdit = ( userId, email, interval, preferences ) => (dispatch) => {
-    fetch(`/users/${userId}`, {
+export const userEdit = ( email, interval, preferences ) => (dispatch) => {
+    fetch(`/users/current`, {
         method: 'put',
         headers: {'content-type': 'application/json'},
-        body: JSON.stringify({ email: email, interval: interval, 
-          preferences: preferences })
+        body: JSON.stringify({ email: email, interval: interval, preferences: preferences })
     })
     .then(resp => resp.json())
     .then(data => data.errors ? dispatch(loadErrors(data.errors)) : dispatch(loadUser(data)) )

@@ -78,7 +78,7 @@ function TaskView() {
         }
     }, [timerOn, attTimer, taskTimer, initialAttTimer])
         
-    
+    console.log(tasks)
 
     if (!list || !tasks) {
         return(<div>Loading User and List information...</div>)
