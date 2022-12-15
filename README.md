@@ -1,7 +1,7 @@
 # Focus Interval
 
 ## Description
-This app is like a task management tool and a pomodoro timer mashed together.  Using this tool, users will add their tasks with an estimated time for each.  There is also a "attention interval" timer, which is a repeating interval.  When the user starts the timer, the attention interval will check in at regular intervals so see if they are still on task.  When the task timer ends, it will also check in.
+This app is like a task management tool and a pomodoro timer mashed together.  Using this tool, users will add their tasks with an estimated time for each.  There is also an "attention interval" timer, which is a repeating interval.  When the user starts the timer, the attention interval will check in at regular intervals so see if they are still on task.  When the task timer ends, it will also check in.
 
 I built this because when you're doing something tedious or unpleasant, and in the opposite state of mind as Flow, it's easy to get distracted.
 The goal is to create a tool that is better (at least for my personal needs) than the offerings from todoist, apple, or microsoft.  I also wanted this tool to work well as a mobile website, a PWA, or a desktop website.
