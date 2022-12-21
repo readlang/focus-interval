@@ -2,8 +2,8 @@ import {useState} from "react";
 
 import styled from "styled-components";
 import logo from "../assets/LS_logo_400.png";
-import LogInForm from "./LogInForm"
-import SignUpForm from "./SignUpForm"
+import UserLogInForm from "./UserLogInForm"
+import UserSignUpForm from "./UserSignUpForm"
 
 const ViewPort = styled.section`
   display: grid;
@@ -42,8 +42,8 @@ function UserPage () {
       <Centered>
           <Sized400><Img src={logo} alt="logo" /> </Sized400>
           <Sized400>{showLogIn ? 
-            <LogInForm setShowLogIn={setShowLogIn} /> :
-            <SignUpForm setShowLogIn={setShowLogIn} />}
+            <UserLogInForm setShowLogIn={setShowLogIn} /> :
+            <UserSignUpForm setShowLogIn={setShowLogIn} />}
           </Sized400>
       </Centered>
     </ViewPort>

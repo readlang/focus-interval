@@ -4,7 +4,7 @@ import {userSignUp} from '../slices/userSlice'
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 
-function SignUpForm({setShowLogIn}) {
+function UserSignUpForm({setShowLogIn}) {
     const dispatch = useDispatch()
     const [username, setUsername] = useState("")
     const [password, setPassword] = useState("")
@@ -126,4 +126,4 @@ function SignUpForm({setShowLogIn}) {
     )
 }
 
-export default SignUpForm;
+export default UserSignUpForm;

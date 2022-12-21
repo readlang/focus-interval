@@ -4,7 +4,7 @@ import {userLogIn} from '../slices/userSlice'
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 
-function LogInForm({setShowLogIn}) {
+function UserLogInForm({setShowLogIn}) {
   const dispatch = useDispatch()
   const [username, setUsername] = useState("")
   const [password, setPassword] = useState("")
@@ -35,4 +35,4 @@ function LogInForm({setShowLogIn}) {
   )
 }
 
-export default LogInForm;
+export default UserLogInForm;
