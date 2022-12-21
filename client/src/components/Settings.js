@@ -55,7 +55,7 @@ function Settings() {
     return(
         <Canvas>
             <Header>
-                <OutlineButton style={{borderRadius: "30px"}} onClick={()=>saveClose()}> <i className="bi bi-x-lg" style={{fontSize: 20, color: "black"}}/> </OutlineButton>
+                <OutlineButton style={{border: "0px"}} onClick={()=>saveClose()}> <i className="bi bi-x-circle" style={{fontSize: 34, color: "black"}}/> </OutlineButton>
                 <H3>Settings</H3>
                 <div style={{width: 35}}/> 
             </Header>

@@ -8,6 +8,7 @@ import ModalAddEdit from "./ModalAddEdit";
 import converter from "./converter";
 import ModalCurTask from "./ModalCurTask.js";
 import ModalAttInt from "./ModalAttInt.js";
+import { editTask } from "../slices/tasksSlice.js";
 
 const AttentionArea = styled.div`
     margin: 4px 10px 0;
@@ -117,7 +118,13 @@ function TaskView() {
                 <H6 style={{margin: "4px 42px 0"}}>ALL TASKS</H6>
                 {tasks.map((element, index) =>  
                     <ListItem key={`${index} ${element.name}`}> 
-                        <IconButton onClick={()=>console.log(`Mark ${element.name} complete.`)}> <i className="bi bi-check-circle" style={{fontSize: 25, color: 'black'}}/>  </IconButton>
+                        <IconButton onClick={()=> {
+                            let status
+
+                            element.status === "incomplete" ? status = "complete" : status = "incomplete"
+                            dispatch(editTask( element.id, element.list_id, element.name, element.details, element.length, status ))} }> 
+                            {element.status === "incomplete" ? <i className="bi bi-circle" style={{fontSize: 25, color: 'black'}}/> : <i className="bi bi-check-circle" style={{fontSize: 25, color: 'black'}}/> }  
+                        </IconButton>
                         <RowButton  onClick={()=>console.log(`Go to ${element.name} task.`)}  > 
                             <H3> {element.name} </H3>
                             <H5B> {element.length} min </H5B> 
