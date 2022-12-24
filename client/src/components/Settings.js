@@ -5,7 +5,7 @@ import styled from "styled-components";
 import { H1, H2, H3, H4, H5, H6, H5B, blueUI } from "../style/styled.js";
 import { Canvas, Header, ScrollableList, ListItem, Footer, IconButton, OutlineButton, RowButton } from "../style/styled.js";
 import { BubbleGroup, BubbleItem, BubbleLine, ButtonRed, InputStyled } from "../style/styled.js";
-import { userEdit } from "../slices/userSlice.js";
+import { userEdit, userLogOut } from "../slices/userSlice.js";
 
 function Settings() {
     const navigate = useNavigate()
@@ -94,7 +94,7 @@ function Settings() {
                     <BubbleLine/>
                     <BubbleItem> <H5B>Email</H5B> <H3>{user.email}</H3></BubbleItem>
                     <BubbleLine/>
-                    <BubbleItem style={{justifyContent: "center"}}> <ButtonRed><H5B style={{color: "hsl(11, 100%, 50%)"}} >Sign Out</H5B></ButtonRed> </BubbleItem>
+                    <BubbleItem style={{justifyContent: "center"}}> <ButtonRed onClick={()=>dispatch(userLogOut())} ><H5B style={{color: "hsl(11, 100%, 50%)"}} >Sign Out</H5B></ButtonRed> </BubbleItem>
                 </BubbleGroup>
 
                 <H5 style={{margin: "30px 10px", textAlign: "center" }}>App crafted with care by Read Langworthy.</H5>                
