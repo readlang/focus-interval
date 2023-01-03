@@ -18,9 +18,15 @@ function App() {
   
   useEffect(() => {
     dispatch(userSessionLogIn())
-    dispatch(getTasks())
-    dispatch(getLists())
   }, [dispatch])
+
+  useEffect(()=> {
+    console.log(user)
+    if (user.id) {
+      dispatch(getTasks())
+      dispatch(getLists())
+    }
+  }, [dispatch, user])
 
   // the if / else serves two purposes:
   // - it checks if user is logged in (and displays the login screen if not)

@@ -12,6 +12,12 @@ function ListView() {
     const [showModal, setShowModal] = useState(false)  // possible states: false, listNew, listEdit, taskNew, taskEdit
     const [modalEdit, setModalEdit] = useState(false)
 
+    if (!lists || lists.error) {
+        console.log(lists)
+        return(<div>Loading User and List information...</div>)
+        
+    } else {
+        console.log(lists)
     return(
         <Canvas>
             <Header>
@@ -41,7 +47,7 @@ function ListView() {
                 </IconButton> 
             </Footer> 
         </Canvas>
-    )
+    )}
 }
 
 export default ListView;
