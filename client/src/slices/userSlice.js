@@ -1,5 +1,6 @@
 import {createSlice} from '@reduxjs/toolkit'
 import { loadErrors } from './errorsSlice'
+import { path } from "./fetchVariable";
 
 export const userSlice = createSlice({
     name: "user",
@@ -19,7 +20,7 @@ export default userSlice.reducer
 
 // Explicit log in by typing username and password - creates session cookie
 export const userLogIn = (username, password) => (dispatch) => {
-    fetch("/login", {
+    fetch(`${path}/login`, {
         method: 'post',
         headers: {'content-type': 'application/json'},
         body: JSON.stringify({username: username, password: password})
@@ -30,7 +31,7 @@ export const userLogIn = (username, password) => (dispatch) => {
 
 // Log in using saved session cookie on return visit
 export const userSessionLogIn = () => (dispatch) => {
-    fetch("/me")
+    fetch(`${path}/me`)
     .then(resp => resp.json())
     // doesn't load errors into state -  no need to display error if not logged in
     .then(data => data.errors ? null : dispatch(loadUser(data)) ) 
@@ -40,7 +41,7 @@ export const userSessionLogIn = () => (dispatch) => {
 export const userSignUp = (
     username, password, passwordConfirm, email
     ) => (dispatch) => {
-    fetch("/signup", {
+    fetch(`${path}/signup`, {
         method: "post",
         headers: {'content-type': 'application/json'},
         body: JSON.stringify({username: username, password: password, 
@@ -52,7 +53,7 @@ export const userSignUp = (
 
 // Explicit log out by clicking log out button - deletes session cookie
 export const userLogOut = () => (dispatch) => {
-    fetch("/logout", {
+    fetch(`${path}/logout`, {
         method: 'delete',
         headers: {'content-type': 'application/json'}
     })
@@ -61,7 +62,7 @@ export const userLogOut = () => (dispatch) => {
 
 // Edit user profile info
 export const userEdit = ( email, interval, preferences ) => (dispatch) => {
-    fetch(`/users/current`, {
+    fetch(`${path}/users/current`, {
         method: 'put',
         headers: {'content-type': 'application/json'},
         body: JSON.stringify({ email: email, interval: interval, preferences: preferences })

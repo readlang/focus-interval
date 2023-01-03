@@ -1,5 +1,6 @@
 import {createSlice} from '@reduxjs/toolkit'
 import {loadErrors } from "./errorsSlice";
+import { path } from "./fetchVariable";
 
 export const tasksSlice = createSlice({
     name: "tasks",
@@ -20,7 +21,7 @@ export const { loadTasks, addTask, editTaskRx, deleteTaskRx } = tasksSlice.actio
 export default tasksSlice.reducer
 
 export const getTasks = () => (dispatch) => {
-    fetch(`/users/current/tasks`)
+    fetch(`${path}/users/current/tasks`)
     .then(resp => resp.json())
     .then(data => {
         data.errors ? dispatch(loadErrors(data.errors)) : dispatch(loadTasks(data))
@@ -28,7 +29,7 @@ export const getTasks = () => (dispatch) => {
 }
 
 export const createTask = ( listId, name, details, length, status ) => (dispatch) => {
-    fetch("/tasks", {
+    fetch(`${path}/tasks`, {
         method: 'post',
         headers: {'content-type': 'application/json'},
         body: JSON.stringify({ list_id: listId, name: name, details: details, length: length, status: status })
@@ -41,7 +42,7 @@ export const createTask = ( listId, name, details, length, status ) => (dispatch
 }
 
 export const editTask = ( taskId, listId, name, details, length, status ) => (dispatch) => {
-    fetch(`/tasks/${taskId}/`, {
+    fetch(`${path}/tasks/${taskId}/`, {
         method: 'put',
         headers: {'content-type': 'application/json'},
         body: JSON.stringify({ list_id: listId, name: name, details: details, length: length, status: status })
@@ -54,7 +55,7 @@ export const editTask = ( taskId, listId, name, details, length, status ) => (di
 }
 
 export const deleteTask = ( taskId ) => (dispatch) => {
-    fetch(`/goals/${taskId}`, {
+    fetch(`${path}/goals/${taskId}`, {
         method: 'delete',
         headers: {'content-type': 'application/json'}
     })

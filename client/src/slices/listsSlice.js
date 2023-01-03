@@ -1,5 +1,6 @@
 import {createSlice} from '@reduxjs/toolkit'
 import {loadErrors } from "./errorsSlice";
+import { path } from "./fetchVariable";
 
 export const listsSlice = createSlice({
     name: "lists",
@@ -20,7 +21,7 @@ export const { loadLists, addList, editListRx, deleteListRx } = listsSlice.actio
 export default listsSlice.reducer
 
 export const getLists = () => (dispatch) => {
-    fetch("/users/current/lists")
+    fetch(`${path}/users/current/lists`)
     .then(resp => resp.json())
     .then(data => {
         data.errors ? dispatch(loadErrors(data.errors)) : dispatch(loadLists(data))
@@ -28,7 +29,7 @@ export const getLists = () => (dispatch) => {
 }
 
 export const createList = ( userId, name, details, order ) => (dispatch) => {
-    fetch("/lists", {
+    fetch(`${path}/lists`, {
         method: 'post',
         headers: {'content-type': 'application/json'},
         body: JSON.stringify({ user_id: userId, name: name, details: details, order: order })
@@ -41,7 +42,7 @@ export const createList = ( userId, name, details, order ) => (dispatch) => {
 }
 
 export const editList = ( listId, name, details, order ) => (dispatch) => {
-    fetch(`/lists/${listId}/`, {
+    fetch(`${path}/lists/${listId}/`, {
         method: 'put',
         headers: {'content-type': 'application/json'},
         body: JSON.stringify({ name: name, details: details, order: order  })
@@ -54,7 +55,7 @@ export const editList = ( listId, name, details, order ) => (dispatch) => {
 }
 
 export const deleteList = ( listId ) => (dispatch) => {
-    fetch(`/goals/${listId}`, {
+    fetch(`${path}/goals/${listId}`, {
         method: 'delete',
         headers: {'content-type': 'application/json'}
     })
