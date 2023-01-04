@@ -20,6 +20,7 @@ export default userSlice.reducer
 
 // Explicit log in by typing username and password - creates session cookie
 export const userLogIn = (username, password) => (dispatch) => {
+    console.log(`${path}/login`)
     fetch(`${path}/login`, {
         method: 'post',
         headers: {'content-type': 'application/json'},
@@ -34,7 +35,11 @@ export const userSessionLogIn = () => (dispatch) => {
     fetch(`${path}/me`)
     .then(resp => resp.json())
     // doesn't load errors into state -  no need to display error if not logged in
-    .then(data => data.errors ? null : dispatch(loadUser(data)) ) 
+    .then(data => {
+        console.log(data)
+        data.errors ? dispatch(loadErrors(data.errors)) : dispatch(loadUser(data))
+    }) 
+    .catch((error) => { console.log(error) })
 }
 
 // New user signup - creates session cookie

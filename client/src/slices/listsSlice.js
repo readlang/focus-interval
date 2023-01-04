@@ -24,6 +24,7 @@ export const getLists = () => (dispatch) => {
     fetch(`${path}/users/current/lists`)
     .then(resp => resp.json())
     .then(data => {
+        console.log(data)
         data.errors ? dispatch(loadErrors(data.errors)) : dispatch(loadLists(data))
     })
 }
