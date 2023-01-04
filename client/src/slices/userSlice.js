@@ -38,10 +38,7 @@ export const userSessionLogIn = () => (dispatch) => {
     })
     .then(resp => resp.json())
     // doesn't load errors into state -  no need to display error if not logged in
-    .then(data => {
-        console.log(data)
-        data.errors ? dispatch(loadErrors(data.errors)) : dispatch(loadUser(data))
-    }) 
+    .then( data => (data.errors ? null : dispatch(loadUser(data)) )) 
     .catch((error) => { console.log(error) })
 }
 

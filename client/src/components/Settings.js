@@ -12,7 +12,14 @@ function Settings() {
     const dispatch = useDispatch()
     const user = useSelector(state=>state.user.value)
 
-    let prefs = JSON.parse(user.preferences)
+    let prefs
+
+    try {
+        prefs = JSON.parse(user.preferences)
+    } catch (error) {
+        prefs = ""
+    }
+    
     if (prefs === "") {
         prefs = {
             attAlarm: true,

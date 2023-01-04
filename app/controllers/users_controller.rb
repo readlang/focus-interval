@@ -4,7 +4,12 @@ class UsersController < ApplicationController
     # post "/signup"
     def create
         new_user = User.create!(user_params)
-        session[:user_id] = new_user.id
+        #session[:user_id] = new_user.id   <----------- changed to cookies
+        cookies.encrypted[:user_id] = {
+            value: new_user.id,
+            same_site: :none,
+            secure: true
+        }
         render json: new_user, status: :created
     end
 
