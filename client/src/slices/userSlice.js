@@ -24,7 +24,8 @@ export const userLogIn = (username, password) => (dispatch) => {
     fetch(`${path}/login`, {
         method: 'post',
         headers: {'content-type': 'application/json'},
-        body: JSON.stringify({username: username, password: password})
+        body: JSON.stringify({username: username, password: password}),
+        credentials: 'include'
     })
     .then(resp =>resp.json())
     .then( data => data.errors ? dispatch(loadErrors(data.errors)) : dispatch(loadUser(data)) )
@@ -32,7 +33,9 @@ export const userLogIn = (username, password) => (dispatch) => {
 
 // Log in using saved session cookie on return visit
 export const userSessionLogIn = () => (dispatch) => {
-    fetch(`${path}/me`)
+    fetch(`${path}/me`, {
+        credentials: 'include'
+    })
     .then(resp => resp.json())
     // doesn't load errors into state -  no need to display error if not logged in
     .then(data => {
@@ -50,7 +53,8 @@ export const userSignUp = (
         method: "post",
         headers: {'content-type': 'application/json'},
         body: JSON.stringify({username: username, password: password, 
-          password_confirmation: passwordConfirm, email: email})
+          password_confirmation: passwordConfirm, email: email}),
+        credentials: 'include'
     })
     .then(resp => resp.json())
     .then(data => data.errors ? dispatch(loadErrors(data.errors)) : dispatch(loadUser(data)) )
@@ -60,7 +64,8 @@ export const userSignUp = (
 export const userLogOut = () => (dispatch) => {
     fetch(`${path}/logout`, {
         method: 'delete',
-        headers: {'content-type': 'application/json'}
+        headers: {'content-type': 'application/json'},
+        credentials: 'include'
     })
     .then( dispatch(loadUser({})) )
 }
@@ -70,7 +75,8 @@ export const userEdit = ( email, interval, preferences ) => (dispatch) => {
     fetch(`${path}/users/current`, {
         method: 'put',
         headers: {'content-type': 'application/json'},
-        body: JSON.stringify({ email: email, interval: interval, preferences: preferences })
+        body: JSON.stringify({ email: email, interval: interval, preferences: preferences }),
+        credentials: 'include'
     })
     .then(resp => resp.json())
     .then(data => data.errors ? dispatch(loadErrors(data.errors)) : dispatch(loadUser(data)) )

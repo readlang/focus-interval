@@ -21,7 +21,9 @@ export const { loadTasks, addTask, editTaskRx, deleteTaskRx } = tasksSlice.actio
 export default tasksSlice.reducer
 
 export const getTasks = () => (dispatch) => {
-    fetch(`${path}/users/current/tasks`)
+    fetch(`${path}/users/current/tasks`, {
+        credentials: 'include'
+    })
     .then(resp => resp.json())
     .then(data => {
         console.log(data)
@@ -33,7 +35,8 @@ export const createTask = ( listId, name, details, length, status ) => (dispatch
     fetch(`${path}/tasks`, {
         method: 'post',
         headers: {'content-type': 'application/json'},
-        body: JSON.stringify({ list_id: listId, name: name, details: details, length: length, status: status })
+        body: JSON.stringify({ list_id: listId, name: name, details: details, length: length, status: status }),
+        credentials: 'include'
     })
     .then(resp => resp.json())
     .then(data => {
@@ -46,7 +49,8 @@ export const editTask = ( taskId, listId, name, details, length, status ) => (di
     fetch(`${path}/tasks/${taskId}/`, {
         method: 'put',
         headers: {'content-type': 'application/json'},
-        body: JSON.stringify({ list_id: listId, name: name, details: details, length: length, status: status })
+        body: JSON.stringify({ list_id: listId, name: name, details: details, length: length, status: status }),
+        credentials: 'include'
     })
     .then(resp => resp.json())
     .then(data => {
@@ -58,7 +62,8 @@ export const editTask = ( taskId, listId, name, details, length, status ) => (di
 export const deleteTask = ( taskId ) => (dispatch) => {
     fetch(`${path}/goals/${taskId}`, {
         method: 'delete',
-        headers: {'content-type': 'application/json'}
+        headers: {'content-type': 'application/json'},
+        credentials: 'include'
     })
     .then(resp => resp.json())
     .then(data => {

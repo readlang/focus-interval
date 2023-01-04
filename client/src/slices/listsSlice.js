@@ -21,7 +21,9 @@ export const { loadLists, addList, editListRx, deleteListRx } = listsSlice.actio
 export default listsSlice.reducer
 
 export const getLists = () => (dispatch) => {
-    fetch(`${path}/users/current/lists`)
+    fetch(`${path}/users/current/lists`, {
+        credentials: 'include'
+    })
     .then(resp => resp.json())
     .then(data => {
         console.log(data)
@@ -33,7 +35,8 @@ export const createList = ( userId, name, details, order ) => (dispatch) => {
     fetch(`${path}/lists`, {
         method: 'post',
         headers: {'content-type': 'application/json'},
-        body: JSON.stringify({ user_id: userId, name: name, details: details, order: order })
+        body: JSON.stringify({ user_id: userId, name: name, details: details, order: order }),
+        credentials: 'include'
     })
     .then(resp => resp.json())
     .then(data => {
@@ -46,7 +49,8 @@ export const editList = ( listId, name, details, order ) => (dispatch) => {
     fetch(`${path}/lists/${listId}/`, {
         method: 'put',
         headers: {'content-type': 'application/json'},
-        body: JSON.stringify({ name: name, details: details, order: order  })
+        body: JSON.stringify({ name: name, details: details, order: order  }),
+        credentials: 'include'
     })
     .then(resp => resp.json())
     .then(data => {
@@ -58,7 +62,8 @@ export const editList = ( listId, name, details, order ) => (dispatch) => {
 export const deleteList = ( listId ) => (dispatch) => {
     fetch(`${path}/goals/${listId}`, {
         method: 'delete',
-        headers: {'content-type': 'application/json'}
+        headers: {'content-type': 'application/json'},
+        credentials: 'include'
     })
     .then(resp => resp.json())
     .then(data => {
