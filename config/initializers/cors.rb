@@ -9,11 +9,17 @@
 
 Rails.application.config.middleware.insert_before 0, Rack::Cors do
   allow do
-    origins '*'
+    origins 'focus-interval.vercel.app/', 'https://focus-interval.vercel.app'
 
     resource '*',
       headers: :any,
-      methods: [:get, :post, :put, :patch, :delete, :options, :head]
+      methods: [:get, :post, :put, :patch, :delete, :options, :head],
+      credentials: true
   end
 
 end
+
+# added below:
+Rails.application.config.hosts << ".focus-interval.vercel.app/"
+Rails.application.config.hosts << "focus-interval.fly.dev"
+Rails.application.config.hosts << "localhost"
