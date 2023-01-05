@@ -12,32 +12,30 @@ function Settings() {
     const dispatch = useDispatch()
     const user = useSelector(state=>state.user.value)
 
-    let prefs
-
-    try {
-        prefs = JSON.parse(user.preferences)
-    } catch (error) {
-        prefs = ""
+    let prefs = {
+        attAlarm: true,
+        attCheckIn: true,
+        pauseTime: 1,
+        taskTimer: 30,
+        taskAlarm: true,
+        taskCheckIn: true,
+        aLotTimer: 30,
+        aLittleTimer: 10
     }
     
-    if (prefs === "") {
-        prefs = {
-            attAlarm: true,
-            attCheckIn: true,
-            pauseTime: 1,
-            taskTimer: 30,
-            taskAlarm: true,
-            taskCheckIn: true,
-            aLotTimer: 30,
-            aLittleTimer: 10
+    if (user.preferences !== null && user.preferences !== "") {
+        try {
+            JSON.parse(user.preferences)
+        } catch (error) {
+            console.log("JSON error:", error)
         }
+        prefs = JSON.parse(user.preferences)
     }
 
-    const [attTimer, setAttTimer] = useState( user.interval ) 
+    const [attTimer, setAttTimer] = useState( user.interval ? user.interval : 5 ) 
     const [attAlarm, setAttAlarm] = useState(prefs.attAlarm)
     const [attCheckIn, setAttCheckIn] = useState(prefs.attCheckIn)
     const [pauseTime, setPauseTime] = useState(prefs.pauseTime)
-
     const [taskTimer, setTaskTimer] = useState(prefs.taskTimer)
     const [taskAlarm, setTaskAlarm] = useState(prefs.taskAlarm)
     const [taskCheckIn, setTaskCheckIn] = useState(prefs.taskCheckIn)
