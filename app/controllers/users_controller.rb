@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
-    skip_before_action :authorize
+    skip_before_action :authorize # modify before deploying
 
     # post "/signup"
     def create

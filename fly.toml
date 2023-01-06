@@ -16,6 +16,7 @@ processes = []
 [deploy]
   release_command = "bin/rails fly:release"
 
+# changing this from 8080 -> 3000
 [env]
   PORT = "8080"
 

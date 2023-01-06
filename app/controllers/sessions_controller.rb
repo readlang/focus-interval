@@ -10,6 +10,8 @@ class SessionsController < ApplicationController
                 value: user.id,
                 same_site: :none,
                 secure: true
+                # this is new:
+                # domain: ['localhost:4000', 'focus-interval.vercel.app', 'focus-interval.fly.dev']
             }
             render json: user, status: :created
         else
@@ -21,6 +23,7 @@ class SessionsController < ApplicationController
     def destroy
         # session.delete :user_id   <----------- changed to cookies
         cookies.delete :user_id
+        # cookies.delete(:user_id, domain: ['localhost:4000', 'focus-interval.vercel.app', 'focus-interval.fly.dev'] )
         head :no_content
     end
 end

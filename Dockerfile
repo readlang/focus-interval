@@ -111,6 +111,7 @@ ARG BUILD_COMMAND="bin/rails fly:build"
 RUN ${BUILD_COMMAND}
 
 # Default server start instructions.  Generally Overridden by fly.toml.
+# changing this from 8080 -> 3000
 ENV PORT 8080
 
 # ARG SERVER_COMMAND="bin/rails fly:server"  this commented out when adding line below...
