@@ -8,18 +8,19 @@
 # [build.environment]
 #   APP_SPECIFIC_FLAG = "true"
 
-# make sure "fetchVariable.js" file is correct as well
+# this redirects the API requests so that they appear
+# to all be coming from same Netlify server as frontend
+# solves CORS issues and cross-site-tracking (iOS) issue
+# - make sure "fetchVariable.js" file is correct as well
 [[redirects]]
   from = "api/*"
   to = "https://focus-interval.fly.dev/:splat"
   status = 200
 
-# [[redirects]]
-#   from = "https://focus-interval.netlify.app/*"
-#   to = "https://focus-interval.netlify.app/"
-#   status = 200
-
+# this redirects (and changes the URL path) if user reloads
+# while app is not at root route so they don't get a 404
 [[redirects]]
   from = "/*"
   to = "https://focus-interval.netlify.app/"
   status = 301
+# to value would have to be changed if absolute path changes

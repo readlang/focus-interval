@@ -21,8 +21,11 @@ ARG RUBY_VERSION=2.7.6
 ARG VARIANT=jemalloc-slim
 FROM quay.io/evl.ms/fullstaq-ruby:${RUBY_VERSION}-${VARIANT} as base
 
+###---------------------------------------------------------------- start rl change
 LABEL fly_launch_runtime="rails"
 
+ARG NODE_VERSION=16.16.0
+ARG YARN_VERSION=1.22.19
 ARG BUNDLER_VERSION=2.3.17
 
 ARG RAILS_ENV=production
@@ -40,6 +43,9 @@ RUN mkdir /app
 WORKDIR /app
 RUN mkdir -p tmp/pids
 
+ENV VOLTA_HOME /root/.volta
+ENV PATH $VOLTA_HOME/bin:/usr/local/bin:$PATH
+
 RUN gem update --system --no-document && \
     gem install -N bundler -v ${BUNDLER_VERSION}
 
@@ -49,7 +55,8 @@ RUN gem update --system --no-document && \
 
 FROM base as build_deps
 
-ARG BUILD_PACKAGES="git build-essential libpq-dev wget vim curl gzip xz-utils libsqlite3-dev pkg-config libxml2-dev libxslt-dev"
+# ARG BUILD_PACKAGES="git build-essential libpq-dev wget vim curl gzip xz-utils libsqlite3-dev pkg-config libxml2-dev libxslt-dev"   ## OLD
+ARG BUILD_PACKAGES="git build-essential libpq-dev wget vim curl gzip xz-utils libsqlite3-dev pkg-config python"
 ENV BUILD_PACKAGES ${BUILD_PACKAGES}
 
 RUN --mount=type=cache,id=dev-apt-cache,sharing=locked,target=/var/cache/apt \
@@ -68,6 +75,19 @@ COPY Gemfile* ./
 RUN bundle install && rm -rf vendor/bundle/ruby/*/cache
 
 #######################################################################
+
+# install node modules
+
+FROM build_deps as node_modules
+
+RUN curl https://get.volta.sh | bash
+RUN volta install node@${NODE_VERSION} yarn@${YARN_VERSION}
+
+COPY package*json ./
+COPY yarn.* ./
+RUN yarn install
+
+####################################################################### -------------------------------------------------------------------- end rl change
 
 # install deployment packages
 
