@@ -14,3 +14,13 @@
   to = "https://focus-interval.fly.dev/:splat"
   status = 200
 
+# [[redirects]]
+#   from = "https://focus-interval.netlify.app/*"
+#   to = "https://focus-interval.netlify.app/"
+
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
+
+
