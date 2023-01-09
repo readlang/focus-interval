@@ -10,7 +10,7 @@
 
 # make sure "fetchVariable.js" file is correct as well
 [[redirects]]
-  from = "api"
-  to = "https://focus-interval.fly.dev"
+  from = "api/*"
+  to = "https://focus-interval.fly.dev/:splat"
   status = 200
 
