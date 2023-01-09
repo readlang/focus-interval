@@ -1,0 +1,16 @@
+# client netlify.toml
+
+# [build]
+#   command = "yarn build"
+#   functions = "functions"
+#   publish = "public"
+
+# [build.environment]
+#   APP_SPECIFIC_FLAG = "true"
+
+# make sure "fetchVariable.js" file is correct as well
+[[redirects]]
+  from = "api"
+  to = "https://focus-interval.fly.dev"
+  status = 200
+
