@@ -1,10 +1,9 @@
 # Focus Interval
 
 ## Description
-This app is like a task management tool and a pomodoro timer mashed together.  Using this tool, users will add their tasks with an estimated time for each.  There is also an "attention interval" timer, which is a repeating interval.  When the user starts the timer, the attention interval will check in at regular intervals so see if they are still on task.  When the task timer ends, it will also check in.
+This app is like a task management tool and a pomodoro timer mashed together.  Using this tool, users can add their list of tasks with an estimated time for each.  When the time for each task is up, the app will check in to see how the user is doing.  There's also an "attention interval" timer- a customizable repeating timer which will check in at regular intervals to see if the user is still on task.  If the attention interval timer is too intrusive, the interval can be made longer or not used at all.
 
-I built this because when you're doing something tedious or unpleasant, and in the opposite state of mind as Flow, it's easy to get distracted.
-The goal is to create a tool that is better (at least for my personal needs) than the offerings from todoist, apple, or microsoft.  I also wanted this tool to work well as a mobile website, a PWA, or a desktop website.
+I built this because when you're doing something tedious or unpleasant (in the opposite state of mind as "Flow"), it can at times be easy to get distracted.  The aim is to create a tool that is different and more actively helpful than the offerings from todoist, apple, or microsoft.  I also wanted this tool to work well as a mobile website, a PWA, or a desktop website.
 
 There is a joke that people attending bootcamps always make a to-do-list app.  Having gotten through Flatiron School without creating one, but wanting to push my design skills forward as a design-capable frontend engineer, I thought that now is my time.  My personal goal in creating this was to build something simple (on a technical level) that would allow me to practice my UX design and styling skills.  Although it is good programming practice, that wasn't the primary point of building the tool.
 
@@ -15,13 +14,30 @@ I hope you enjoy using it.  Thanks for checking it out.
 ![task_view](readme/Task_view.png)
 ![task_modal_view](readme/Task_modal.png)
 
+## Learning Objectives
+- To practice frontend development skills with more involved styling/ layout than other projects
+- To practice UX design skills making something like a high-touch mobile app rather than just a desktop program
+- Using Figma as a integral part of the UX design process
+- To build a project that works and looks great on mobile and desktop web, and can be used as a PWA as well
+- To learn new deployment strategies:
+    - in this case, learning how to split the deployment of frontend and backend to separate services
+    - learning about "JAMstack" techniques
+    - working through CORS issues and the iOS "Prevent Cross-Site Tracking" issue
+    - learning about proxying API requests
+    - deploying with Docker
+    - Backend (Rails + Postgresql) is hosted on Fly.io 
+    - Frontend (React) is hosted on Netlify
 
 ## Technologies Used
 - React
+- Redux
 - React Router
 - Styled Components
 - Ruby on Rails
 - Postgresql
+- Docker
+- Fly.io & Netlify
+- Figma
 
 
 ## Walkthrough
