@@ -60,7 +60,7 @@ export const editList = ( listId, name, details, order ) => (dispatch) => {
 }
 
 export const deleteList = ( listId ) => (dispatch) => {
-    fetch(`${path}/goals/${listId}`, {
+    fetch(`${path}/lists/${listId}`, {
         method: 'delete',
         headers: {'content-type': 'application/json'},
         credentials: 'include'

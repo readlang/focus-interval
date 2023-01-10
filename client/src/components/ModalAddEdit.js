@@ -7,6 +7,7 @@ import { Canvas, Header, ScrollableList, ListItem, Footer, IconButton, OutlineBu
 import { BubbleGroup, BubbleItem, BubbleLine, ButtonRed, InputStyled } from "../style/styled.js";
 import { createTask, editTask, deleteTask } from "../slices/tasksSlice";
 import { createList, editList, deleteList } from "../slices/listsSlice";
+import DeleteConfirm from "./DeleteConfirm";
 
 const Background = styled.div`
     display: flex; 
@@ -37,8 +38,6 @@ function ModalAddEdit({showModal, setShowModal, modalEdit, setModalEdit}) {
     const [timer, setTimer] = useState(modalEdit.length ? modalEdit.length : "15")
     const [details, setDetails] = useState(modalEdit.details ? modalEdit.details : "")
 
-
-
     function save() {
         console.log("save")
         switch (showModal) {
@@ -63,6 +62,17 @@ function ModalAddEdit({showModal, setShowModal, modalEdit, setModalEdit}) {
 
     function deleteItem() {
         console.log("delete")
+        switch (showModal) {
+            case "listEdit":
+                dispatch(deleteList(modalEdit.id))     
+                break;
+            case "taskEdit":
+                dispatch(deleteTask( modalEdit.id ))
+                break;
+            default:
+                console.log("error: none deleted")
+            break;
+        }
         setShowModal(false)
     }
 
@@ -71,10 +81,13 @@ function ModalAddEdit({showModal, setShowModal, modalEdit, setModalEdit}) {
             <Window onClick={(e)=>e.stopPropagation()}>
                 <div style={{display: "flex", justifyContent: "space-between", margin: "0 10px"}}>
                     <IconButton onClick={()=>setShowModal(false)}><H5B style={{color: blueUI}}>Cancel</H5B></IconButton>
-                    <H3>{showModal.slice(0,4) === "task" ? "Edit Task" : "Edit List"}</H3>   {/* doesn't seem to be working here */}
-                    <IconButton onClick={save}><H5B style={{color: blueUI, fontWeight: "bold"}}>Save</H5B></IconButton>
+                    <H3>{showModal.slice(0,4) === "task" ? "Edit Task" : "Edit List"}</H3>   
+                    {showModal.slice(4) === "Edit" ? <DeleteConfirm deleteItem={deleteItem}/>  : <div style={{width: "46px"}} />  }
+                    
                 </div>
+                <div style={{height: "15px"}} />
                 {showModal.slice(0,4) === "task" ? 
+                // this is for TASKS
                 <BubbleGroup>
                     <BubbleItem> <H5B>Name&nbsp;</H5B> <InputStyled type="text" placeholder="New Task" style={{width: "100%"}} 
                         value={name} onChange={e=>setName(e.target.value)} /> </BubbleItem>
@@ -85,9 +98,12 @@ function ModalAddEdit({showModal, setShowModal, modalEdit, setModalEdit}) {
                     <BubbleItem> <H5B>Details&nbsp;</H5B> <InputStyled type="text" placeholder="optional notes..." style={{width: "100%", fontSize: "16px", fontWeight: "bold"}} 
                         value={details} onChange={e=>setDetails(e.target.value)} />  </BubbleItem>
                     <BubbleLine/>
-                    <BubbleItem style={{justifyContent: "center"}}> <ButtonRed onClick={deleteItem}><H5B style={{color: "hsl(11, 100%, 50%)"}} >&emsp;Delete Task&emsp;</H5B></ButtonRed> </BubbleItem>
+                    <BubbleItem style={{justifyContent: "center"}}> 
+                        <ButtonRed onClick={save} style={{borderColor: blueUI}} ><H5B style={{color: blueUI, fontWeight: "bold" }} > &emsp;Save Task&emsp;</H5B></ButtonRed>  
+                    </BubbleItem>
                 </BubbleGroup>
                 : 
+                // this is for LISTs
                 <>
                     <BubbleGroup>
                         <BubbleItem> <H5B>List Name</H5B> <InputStyled type="text" placeholder="New List" style={{width: "200px"}} 
@@ -97,17 +113,9 @@ function ModalAddEdit({showModal, setShowModal, modalEdit, setModalEdit}) {
                             value={details} onChange={e=>setDetails(e.target.value)} />  </BubbleItem>
                         <BubbleLine/>
                         <BubbleItem style={{justifyContent: "center"}}> 
-                           <ButtonRed style={{borderColor: blueUI}} ><H5B style={{color: blueUI }} > &emsp;Save List&emsp;</H5B></ButtonRed>  
+                           <ButtonRed onClick={save} style={{borderColor: blueUI}} ><H5B style={{color: blueUI }} > &emsp;Save List&emsp;</H5B></ButtonRed>  
                         </BubbleItem>
-                    </BubbleGroup>
-                    <BubbleGroup style={{width: "230px", margin: "25px auto"}}>
-                        <BubbleItem style={{justifyContent: "center"}}> 
-                            <H5B > Delete List & Tasks&ensp;</H5B>
-                            <ButtonRed style={{height:"40px", width: "40px", borderRadius: "20px"}}>
-                                <i className="bi bi-trash3" style={{fontSize: 20, color: "red"}}/>
-                            </ButtonRed>
-                        </BubbleItem>
-                    </BubbleGroup>
+                    </BubbleGroup> 
                 </>
                 }
             </Window>
