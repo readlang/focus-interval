@@ -27,9 +27,9 @@ function UserLogInForm({setShowLogIn}) {
         value={password} onChange={e => setPassword(e.target.value)} />
       </Form.Group>
 
-      <Button variant="primary" type="submit"> Log into LightShip </Button>
-      <br/> <hr/> <br/>
-
+      <Button variant="primary" type="submit">&emsp; Log in &emsp; </Button>
+      <hr/> 
+      
       <Button variant="outline-secondary"  onClick={() => setShowLogIn(false)}> Sign up for account </Button>
     </Form>        
   )

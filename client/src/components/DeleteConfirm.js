@@ -19,15 +19,15 @@ const Background = styled.div`
 `
 const FloatingDelete = styled.button`
     position: absolute;
-    top: 30px;
+    top: 22px;
     right: 2px;
     z-index: 2;
     padding: 1px;
-    width: 140px;
+    width: 145px;
     height: 30px;
     border: 1.5px solid red;
     background-color: white;
-    border-radius: 10px 10px 10px 10px;
+    border-radius: 10px 3px 10px 10px;
 `
 
 function DeleteConfirm({deleteItem}) {
@@ -40,7 +40,7 @@ function DeleteConfirm({deleteItem}) {
                 <>
                     <Background onClick={()=>setShowConf(false)}/>
                     <FloatingDelete onClick={deleteItem}>
-                        <H5B style={{color: "red", fontWeight: "bold" }}>Confirm Delete</H5B>
+                        <H5B style={{color: "red", fontWeight: "bold" }}>Confirm Delete?</H5B>
                     </FloatingDelete> 
                 </>
             : null} 

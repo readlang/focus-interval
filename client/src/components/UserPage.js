@@ -1,7 +1,7 @@
 import {useState} from "react";
 
 import styled from "styled-components";
-import logo from "../assets/LS_logo_400.png";
+import logo from "../assets/FI_logo500.png";
 import UserLogInForm from "./UserLogInForm"
 import UserSignUpForm from "./UserSignUpForm"
 
@@ -21,17 +21,18 @@ const Centered = styled.div`
 `
 
 const Sized400 = styled.div`
-  height: 400px;
-  width: 400px;
+  height: 320px;
+  width: 357px;
   background-color: white;
   padding: 20px;
   box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.5);
+  
 `
 
 const Img = styled.img`
   object-fit: fill;
-  height: 360px;
-  border-radius: 0px;
+  height: 280px;
+  border-radius: 20px;
 `
 
 function UserPage () {
@@ -40,7 +41,7 @@ function UserPage () {
   return(
     <ViewPort>
       <Centered>
-          <Sized400><Img src={logo} alt="logo" /> </Sized400>
+          <Sized400 style={{display: "flex", justifyContent: "center" }}><Img src={logo} alt="logo" /> </Sized400>
           <Sized400>{showLogIn ? 
             <UserLogInForm setShowLogIn={setShowLogIn} /> :
             <UserSignUpForm setShowLogIn={setShowLogIn} />}
