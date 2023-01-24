@@ -32,6 +32,7 @@ export const getTasks = () => (dispatch) => {
 }
 
 export const createTask = ( listId, name, details, length, status ) => (dispatch) => {
+    console.log(listId, name, details, length, status)
     fetch(`${path}/tasks`, {
         method: 'post',
         headers: {'content-type': 'application/json'},
@@ -39,14 +40,14 @@ export const createTask = ( listId, name, details, length, status ) => (dispatch
         credentials: 'include'
     })
     .then(resp => resp.json())
-    .then(data => {
+    .then(data => {   // something breaking down here - not valid JSON...
         console.log(data)
         data.errors ? dispatch(loadErrors(data.errors)) : dispatch(addTask(data))
     })
 }
 
 export const editTask = ( taskId, listId, name, details, length, status ) => (dispatch) => {
-    fetch(`${path}/tasks/${taskId}/`, {
+    fetch(`${path}/tasks/${taskId}/`, {   // something breaking down here - 405 error
         method: 'put',
         headers: {'content-type': 'application/json'},
         body: JSON.stringify({ list_id: listId, name: name, details: details, length: length, status: status }),
@@ -60,7 +61,7 @@ export const editTask = ( taskId, listId, name, details, length, status ) => (di
 }
 
 export const deleteTask = ( taskId ) => (dispatch) => {
-    fetch(`${path}/tasks/${taskId}`, {
+    fetch(`${path}/tasks/${taskId}`, {   // something breaking down here - 405 error
         method: 'delete',
         headers: {'content-type': 'application/json'},
         credentials: 'include'
