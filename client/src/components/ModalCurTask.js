@@ -7,6 +7,7 @@ import { Canvas, Header, ScrollableList, ListItem, Footer, IconButton, OutlineBu
 import { BubbleGroup, BubbleItem, BubbleLine, ButtonRed, InputStyled } from "../style/styled.js";
 import { createTask, editTask, deleteTask } from "../slices/tasksSlice";
 import { createList, editList, deleteList } from "../slices/listsSlice";
+import chime_low from "../assets/chime_task_low.mp3";
 
 const Background = styled.div`
     display: flex; 
@@ -43,6 +44,13 @@ function ModalCurTask({setShowModalCur, modalEdit, setModalEdit}) {
     const dispatch = useDispatch()
     const user = useSelector((state)=>state.user.value)
 
+    function playsound () {
+        let audio = new Audio(chime_low)
+        audio.loop = false;
+        audio.play()
+    }
+
+    playsound()
 
     return(
         <Background onClick={()=>setShowModalCur(false)}>

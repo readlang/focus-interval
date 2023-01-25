@@ -7,6 +7,7 @@ import { Canvas, Header, ScrollableList, ListItem, Footer, IconButton, OutlineBu
 import { BubbleGroup, BubbleItem, BubbleLine, ButtonRed, InputStyled } from "../style/styled.js";
 import { createTask, editTask, deleteTask } from "../slices/tasksSlice";
 import { createList, editList, deleteList } from "../slices/listsSlice";
+import chime_high from "../assets/chime_interval_high.mp3";
 
 const Background = styled.div`
     display: flex; 
@@ -43,6 +44,12 @@ function ModalAttInt({setShowModalAtt, modalEdit, setModalEdit}) {
     const dispatch = useDispatch()
     const user = useSelector((state)=>state.user.value)
 
+    function playsound () {
+        let audio = new Audio(chime_high)
+        audio.play()
+    }
+
+    playsound()
 
     return(
         <Background onClick={()=>setShowModalAtt(false)}>

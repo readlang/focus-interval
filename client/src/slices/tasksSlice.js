@@ -32,6 +32,7 @@ export const getTasks = () => (dispatch) => {
 }
 
 export const createTask = ( listId, name, details, length, status ) => (dispatch) => {
+    console.log(`Path: -${path}-`)
     fetch(`${path}/tasks`, {
         method: 'post',
         headers: {'content-type': 'application/json'},
