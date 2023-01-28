@@ -6,6 +6,7 @@ import { H1, H2, H3, H4, H5, H6, H5B, blueUI } from "../style/styled.js";
 import { Canvas, Header, ScrollableList, ListItem, Footer, IconButton, OutlineButton, RowButton } from "../style/styled.js";
 import ModalAddEdit from "./ModalAddEdit";
 import converter from "./converter";
+import sorter from "./sorter.js";
 import ModalCurTask from "./ModalCurTask.js";
 import ModalAttInt from "./ModalAttInt.js";
 import { editTask } from "../slices/tasksSlice.js";
@@ -29,7 +30,8 @@ function TaskView() {
     const user = useSelector((state)=>state.user.value)
     let listId = parseInt(useParams().listId) // grab param out of url
     let list = useSelector(state => state.lists.userLists).find(x => x.id === listId)  // find the appropriate list out of all the lists
-    const tasks = useSelector(state => state.tasks.userTasks).filter(task => (task.list_id === listId))  // find only the tasks related to this list
+    const unorderedTasks = useSelector(state => state.tasks.userTasks).filter(task => (task.list_id === listId))  // find only the tasks related to this list
+    const tasks = sorter(unorderedTasks, list )
     
     const [showModal, setShowModal] = useState(false)  // possible states: false, listNew, listEdit, taskNew, taskEdit
     const [modalEdit, setModalEdit] = useState(false)
@@ -80,6 +82,7 @@ function TaskView() {
     }, [timerOn, attTimer, taskTimer, initialAttTimer])
         
     console.log(tasks)
+    console.log(list)
 
     if (!list || !tasks) {
         return(<div>Loading User and List information...</div>)
