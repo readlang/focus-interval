@@ -6,10 +6,13 @@ import { H1, H2, H3, H4, H5, H6, H5B, blueUI } from "../style/styled.js";
 import { Canvas, Header, ScrollableList, ListItem, Footer, IconButton, OutlineButton, RowButton } from "../style/styled.js";
 import ModalAddEdit from "./ModalAddEdit";
 import converter from "./converter";
-import sorter from "./sorter.js";
+import Sorter from "./Sorter.js";
+//import Reorder from "./Reorder.js";
 import ModalCurTask from "./ModalCurTask.js";
 import ModalAttInt from "./ModalAttInt.js";
 import { editTask } from "../slices/tasksSlice.js";
+import { editList } from "../slices/listsSlice";
+import ToolTip from "./ToolTip"
 
 const AttentionArea = styled.div`
     margin: 4px 10px 0;
@@ -31,13 +34,14 @@ function TaskView() {
     let listId = parseInt(useParams().listId) // grab param out of url
     let list = useSelector(state => state.lists.userLists).find(x => x.id === listId)  // find the appropriate list out of all the lists
     const unorderedTasks = useSelector(state => state.tasks.userTasks).filter(task => (task.list_id === listId))  // find only the tasks related to this list
-    const tasks = sorter(unorderedTasks, list )
+    const tasks = Sorter(unorderedTasks, list ) // this sorts the tasks by the value in list.order, and cleans up list.order
     
     const [showModal, setShowModal] = useState(false)  // possible states: false, listNew, listEdit, taskNew, taskEdit
     const [modalEdit, setModalEdit] = useState(false)
 
     const [showModalAtt, setShowModalAtt] = useState(false)  // The attention interval modal
     const [showModalCur, setShowModalCur] = useState(false)  // The current task modal
+    const [showTooltip, setShowTooltip] = useState(false)
     
     const [timerOn, setTimerOn] = useState(false)  // controls whether the timer is running
     const initialAttTimer = user.interval  // takes the initial attention timer out of the user object
@@ -84,6 +88,33 @@ function TaskView() {
     console.log(tasks)
     console.log(list)
 
+    const [dragStartY, setDragStartY] = useState(0)
+    const [dragEndY, setDragEndY] = useState(0)
+
+    function calcMove(endY, element, index) {
+        let delta = endY - dragStartY //positve values move toward bottom of page
+        let movement = Math.round(delta/72)
+        console.log("delta:", delta, "move places", movement )     
+        Reorder(element, index, movement, tasks, list)
+        // height of item = 72 px
+    }
+
+    function Reorder(element, index, movement, tasks, list) {
+        //const dispatch = useDispatch()
+    
+        //need some controls on the movement variable here - currently it can be anything!
+        
+        let newOrder = []
+        tasks.forEach(task => newOrder.push(task.id))
+        newOrder.splice(index, 1)
+        newOrder.splice(index+movement, 0, element.id )
+        console.log(element.id, "has moved")
+        console.log(newOrder)
+        dispatch(editList(list.id, list.name, list.details, JSON.stringify(newOrder)))
+    }
+
+    //if each list item is the same height (it should be) then you can calculate where in the list the item should go.
+
     if (!list || !tasks) {
         return(<div>Loading User and List information...</div>)
     } else
@@ -120,7 +151,10 @@ function TaskView() {
             <ScrollableList>
                 <H6 style={{margin: "4px 42px 0"}}>ALL TASKS</H6>
                 {tasks.map((element, index) =>  
-                    <ListItem key={`${index} ${element.name}`}> 
+                    <ListItem key={`${index} ${element.name}`} draggable="true"
+                        onDragStart = {(event) => {setDragStartY(event.clientY); console.log("start:", event.clientY)} } // change this to save the xy into state
+                        onDragEnd = {(event) => {setDragEndY(event.clientY); console.log("end:", event.clientY); calcMove(event.clientY, element, index)} }
+                        > 
                         <IconButton onClick={()=> {
                             let status
 
@@ -135,7 +169,7 @@ function TaskView() {
                         </RowButton>     
                         <IconButton onClick={()=> {setShowModal("taskEdit"); setModalEdit(element)} }> <i className="bi bi-three-dots-vertical" style={{fontSize: 25, color: 'black'}}/> </IconButton>
                     </ListItem> 
-                )}    
+                )}
             </ScrollableList>
             {showModal ? <ModalAddEdit showModal={showModal} setShowModal={setShowModal} modalEdit={modalEdit} setModalEdit={setModalEdit} /> : null }
             {showModalAtt ? <ModalAttInt setShowModalAtt={setShowModalAtt} /> : null }
@@ -146,7 +180,10 @@ function TaskView() {
                     <i className="bi bi-plus-circle-fill" style={{fontSize: 25, color: `${blueUI}` }} />  
                     <H5B style={{color: `${blueUI}`}}> &nbsp; New Task &emsp; &emsp;</H5B> 
                 </IconButton>
-                <IconButton onClick={()=>console.log("Reorder tasks.")}> <i className="bi bi-arrow-down-up" style={{fontSize: 25, color: `${blueUI}`}} /> </IconButton> 
+                <div>
+                    <IconButton onClick={()=>setShowTooltip(!showTooltip)}> <i className="bi bi-arrow-down-up" style={{fontSize: 25, color: `${blueUI}`}} /> </IconButton> 
+                    {showTooltip ? <ToolTip text={"Drag tasks up/down to move"} /> : null }
+                </div>
             </Footer> 
         </Canvas>
     )
