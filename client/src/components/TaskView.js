@@ -7,7 +7,7 @@ import { Canvas, Header, ScrollableList, ListItem, Footer, IconButton, OutlineBu
 import ModalAddEdit from "./ModalAddEdit";
 import converter from "./converter";
 import Sorter from "./Sorter.js";
-//import Reorder from "./Reorder.js";
+import Reorder from "./Reorder.js";
 import ModalCurTask from "./ModalCurTask.js";
 import ModalAttInt from "./ModalAttInt.js";
 import { editTask } from "../slices/tasksSlice.js";
@@ -55,12 +55,9 @@ function TaskView() {
     }, [initialAttTimer])
 
     useEffect(()=>{
-        if (initialTaskTimer) setTaskTimer(initialTaskTimer * 60)
-        console.log("tasks")
-        
+        if (initialTaskTimer) setTaskTimer(initialTaskTimer * 60)        
     },[initialTaskTimer])        
     
-
     useEffect(()=>{
         let intervalId
         if (timerOn) {
@@ -84,9 +81,6 @@ function TaskView() {
             clearInterval(intervalId)
         }
     }, [timerOn, attTimer, taskTimer, initialAttTimer])
-        
-    console.log(tasks)
-    console.log(list)
 
     const [dragStartY, setDragStartY] = useState(0)
     const [dragEndY, setDragEndY] = useState(0)
@@ -94,26 +88,11 @@ function TaskView() {
     function calcMove(endY, element, index) {
         let delta = endY - dragStartY //positve values move toward bottom of page
         let movement = Math.round(delta/72)
-        console.log("delta:", delta, "move places", movement )     
-        Reorder(element, index, movement, tasks, list)
+        let newOrder = Reorder(element, index, movement, tasks) 
+        dispatch(editList(list.id, list.name, list.details, JSON.stringify( newOrder )))
         // height of item = 72 px
     }
-
-    function Reorder(element, index, movement, tasks, list) {
-        //const dispatch = useDispatch()
-    
-        //need some controls on the movement variable here - currently it can be anything!
-        
-        let newOrder = []
-        tasks.forEach(task => newOrder.push(task.id))
-        newOrder.splice(index, 1)
-        newOrder.splice(index+movement, 0, element.id )
-        console.log(element.id, "has moved")
-        console.log(newOrder)
-        dispatch(editList(list.id, list.name, list.details, JSON.stringify(newOrder)))
-    }
-
-    //if each list item is the same height (it should be) then you can calculate where in the list the item should go.
+    //make each list item the same height!  for tasks with comments or no comments.
 
     if (!list || !tasks) {
         return(<div>Loading User and List information...</div>)
@@ -154,6 +133,8 @@ function TaskView() {
                     <ListItem key={`${index} ${element.name}`} draggable="true"
                         onDragStart = {(event) => {setDragStartY(event.clientY); console.log("start:", event.clientY)} } // change this to save the xy into state
                         onDragEnd = {(event) => {setDragEndY(event.clientY); console.log("end:", event.clientY); calcMove(event.clientY, element, index)} }
+                        onTouchStart = {(event) => console.log("onTouchStart activated!", Math.round( event.targetTouches[0].clientY) )} 
+                        onTouchEnd = {(event) => console.log("onTouchEnd activated!", Math.round(event.changedTouches[0].clientY) )} 
                         > 
                         <IconButton onClick={()=> {
                             let status

@@ -48,18 +48,12 @@ function Sorter(tasks, list) {
         order.forEach( id => orderizer(id) )
         // map through the remainging in tasksCopy - output any not contained in "order"
         tasksCopy.map(ele => tasksOrdered.push(ele))
-        console.log(orderRemoveIds)
         if (orderRemoveIds.length !== 0) {
             orderRemoveIds.forEach(id => order.splice(order.findIndex(x => x === id) , 1))
             console.log(order)
             dispatch(editList(list.id, list.name, list.details, JSON.stringify(order)))
         }
-        
-
-
     }
-
-
 
     if (tasksCopy.length !== 0 && list && list.id != null) {
     
@@ -71,17 +65,3 @@ function Sorter(tasks, list) {
 }
 
 export default Sorter;
-
-
-// let tasks = [
-//     {name: "task five", id: 5},
-//     {name: "task three", id: 3},
-//     {name: "task one", id: 1}
-// ]
-// let json = "[3,4]"
-// let list = {name: "read", order: json}
-
-// console.log( tasks )
-// console.log( sorter(tasks, list))
-
-

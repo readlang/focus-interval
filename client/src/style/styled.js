@@ -20,10 +20,17 @@ export const ScrollableList = styled.div`
   overflow-y: scroll;
 `
 export const ListItem = styled.div`
-  border-bottom: 1px solid lightgray;
+  & {border-bottom: 1px solid lightgray;
   display: flex;
   align-items: center;
   justify-content: space-between;
+  }
+  &:hover {
+    cursor: grab;
+  }
+  &:active {
+    cursor: grabbing;
+  }
 `
 export const Footer = styled.div`
   flex: 0 0 70px;
