@@ -154,7 +154,7 @@ function TaskView() {
             </ScrollableList>
             {showModal ? <ModalAddEdit showModal={showModal} setShowModal={setShowModal} modalEdit={modalEdit} setModalEdit={setModalEdit} /> : null }
             {showModalAtt ? <ModalAttInt setShowModalAtt={setShowModalAtt} /> : null }
-            {showModalCur ? <ModalCurTask setShowModalCur={setShowModalCur} /> : null }
+            {showModalCur ? <ModalCurTask setShowModalCur={setShowModalCur} tasks={tasks} list={list} /> : null }
              
             <Footer> 
                 <IconButton onClick={()=>{setShowModal("taskNew"); setModalEdit(listId)}}> 

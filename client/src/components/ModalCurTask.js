@@ -40,9 +40,9 @@ const ButtonBig = styled.button`
     padding: 4px;
 `
 
-function ModalCurTask({setShowModalCur, modalEdit, setModalEdit}) {
+function ModalCurTask({setShowModalCur, tasks, list}) {
     const dispatch = useDispatch()
-    const user = useSelector((state)=>state.user.value)
+    //const user = useSelector((state)=>state.user.value)
 
     function playsound () {
         let audio = new Audio(chime_low)
@@ -51,6 +51,31 @@ function ModalCurTask({setShowModalCur, modalEdit, setModalEdit}) {
     }
 
     playsound()
+
+    function markComplete(task) {
+        dispatch(editTask( task.id, task.list_id, task.name, task.details, task.length, "complete" ))
+    }
+    
+    function moveToLast(tasks, list) {
+        let order = []
+        tasks.forEach(task => { order.push(task.id) });
+        order.push(order.shift())
+        dispatch(editList(list.id, list.name, list.details, JSON.stringify( order )))
+    }
+    function startTimer() {
+        
+    }
+
+    function addTimeLittle() {
+
+    }
+    function addTimeLots() {
+        
+    }
+    function showPause() {
+        
+    }
+
 
     return(
         <Background onClick={()=>setShowModalCur(false)}>
@@ -65,7 +90,8 @@ function ModalCurTask({setShowModalCur, modalEdit, setModalEdit}) {
                     <br/><br/>
                     <H3>READY TO MOVE ON?</H3>
                     <br/>
-                    <ButtonBig inputColor="hsl(191, 100%, 81%)"><H2>Yes</H2><H4>Current Task Complete</H4> <H5> Move to next task</H5> </ButtonBig>
+                    <ButtonBig inputColor="hsl(191, 100%, 81%)" onClick={()=>{markComplete(tasks[0]); moveToLast(tasks, list); setShowModalCur(false)}} >
+                        <H2>Yes</H2><H4>Current Task Complete</H4> <H5> Move to next task</H5> </ButtonBig>
                     <ButtonBig inputColor="hsl(150, 100%, 87%)"><H2>Yes, But</H2><H4>Current Task Not Complete</H4> <H5> Move to next task</H5> </ButtonBig>
                     <ButtonBig inputColor="hsl(85, 100%, 75%)"><H2>Almost</H2><H4>Need A Little More Time</H4> <H5> stay on current</H5> </ButtonBig>
                     <ButtonBig inputColor="hsl(50, 100%, 65%)"><H2>No</H2><H4>Need A Lot More Time</H4> <H5> stay on current</H5></ButtonBig>
