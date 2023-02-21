@@ -14,6 +14,8 @@ I hope you enjoy using it.  Thanks for checking it out.
 ![task_view](readme/Task_view.png)
 ![task_modal_view](readme/Task_modal.png)
 
+![gif animation](readme/Focus_animation.gif)
+
 ## Learning Objectives
 - To practice frontend development skills with more involved styling/ layout than other projects
 - To practice UX design skills making something like a high-touch mobile app rather than just a desktop program
